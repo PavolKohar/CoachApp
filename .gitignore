@@ -43,3 +43,6 @@ release.properties
 
 # Env files
 .env
+
+BackEnd-Java/src/main/resources/application.properties
+BackEnd-Java/target/
