@@ -15,6 +15,8 @@ function AddClientForm() {
         height: "",
         originalWeight: "",
         goalWeight: "",
+        activityLevel: "",
+        birthDate: "",
         sex: "MAN",
         program: ""
     });
@@ -46,6 +48,8 @@ function AddClientForm() {
                 zipCode: "",
                 street: "",
                 height: "",
+                activityLevel: "",
+                birthDate: "",
                 originalWeight: "",
                 goalWeight: "", });
             setSuccessMessage("Client added successfully!");
@@ -129,6 +133,19 @@ function AddClientForm() {
           <option value="MAN">Male</option>
           <option value="WOMAN">Female</option>
         </select>
+      </div>
+
+      <div className='col-md-6'>
+        <label  className="form-label">Activity level</label>
+        <input type="range" name="activityLevel" value={formData.activityLevel} className="form-range" min="1" max="5" step="1"  onChange={handleChange} ></input>
+          <span>{formData.activityLevel}</span> {/* 👈 Pre zobrazenie hodnoty */}
+
+      </div>
+
+      <div className='col-md-6'>
+        <label className="form-label">Birth Date</label>
+        <input type="date" className="form-control" name="birthDate" value={formData.birthDate} onChange={handleChange} />
+
       </div>
 
       <div className="col-md-6">
