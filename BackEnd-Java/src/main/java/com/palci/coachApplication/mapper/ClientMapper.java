@@ -2,6 +2,7 @@ package com.palci.coachApplication.mapper;
 
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.request.ClientRequest;
+import com.palci.coachApplication.model.response.ClientResponse;
 
 public class ClientMapper {
 
@@ -22,6 +23,29 @@ public class ClientMapper {
         entity.setProgram(request.getProgram());
 
         return entity;
+    }
+
+    public static ClientResponse toResponse(ClientEntity entity){
+        ClientResponse response = new ClientResponse();
+
+        response.setClientId(entity.getClientId());
+        response.setFirstName(entity.getFirstName());
+        response.setLastName(entity.getLastName());
+        response.setEmail(entity.getEmail());
+        response.setPhoneNumber(entity.getPhoneNumber());
+        response.setCountry(entity.getCountry());
+        response.setCity(entity.getCity());
+        response.setZipCode(entity.getZipCode());
+        response.setStreet(entity.getStreet());
+        response.setHeight(entity.getHeight());
+        response.setOriginalWeight(entity.getOriginalWeight());
+        response.setCurrentWeight(entity.getCurrentWeight());
+        response.setGoalWeight(entity.getGoalWeight());
+        response.setSex(entity.getSex());
+        response.setProgram(entity.getProgram());
+        response.setActive(entity.getActive());
+
+        return response;
     }
 
 }

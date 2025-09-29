@@ -14,10 +14,10 @@ public class ClientRequest {
     private String email;
     private String phoneNumber;
 
-    private String Country;
+    private String country;
     private String city;
     private String zipCode;
-    private String Street;
+    private String street;
 
     private double height;
     private double originalWeight;

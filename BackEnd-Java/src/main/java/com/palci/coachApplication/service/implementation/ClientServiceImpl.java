@@ -6,8 +6,10 @@ import com.palci.coachApplication.model.request.ClientRequest;
 import com.palci.coachApplication.repository.ClientRepository;
 import com.palci.coachApplication.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
