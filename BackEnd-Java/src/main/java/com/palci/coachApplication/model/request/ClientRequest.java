@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class ClientRequest {
 
+    //TODO add validation for client
+
     private String firstName;
     private String lastName;
 
