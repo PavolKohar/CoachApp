@@ -19,6 +19,9 @@ function AddClientForm() {
         program: ""
     });
 
+    const[successMessage, setSuccessMessage] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -33,17 +36,36 @@ function AddClientForm() {
             const response = await addClient(formData);
             console.log("Client added successfully:", response);
             // Optionally reset the form or provide feedback to the user
+            setFormData({
+                firstName: "",
+                lastName: "",
+                email: "",
+                phoneNumber: "",
+                country: "",
+                city: "",
+                zipCode: "",
+                street: "",
+                height: "",
+                originalWeight: "",
+                goalWeight: "", });
+            setSuccessMessage("Client added successfully!");
+            setErrorMessage("");
+           
         } catch (error) {
             console.error("Error adding client:", error);
-            // Handle error (e.g., show error message to user)
+            setErrorMessage("Failed to add client. Please try again.");
+            setSuccessMessage("");
         }
+         
     };
 
     return(
         <>
         <div className="container">
         <form onSubmit={handleSubmit} className="row g-3">
-      <h3>Add New Client</h3>
+      <h2 className="text-center text-primary" >Add New Client</h2>
+      {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
+        {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
       <hr />
 
       <div className="col-md-6">
@@ -104,8 +126,8 @@ function AddClientForm() {
       <div className="col-md-6">
         <label className="form-label">Sex</label>
         <select className="form-select" name="sex" value={formData.sex} onChange={handleChange}>
-          <option value="MALE">Male</option>
-          <option value="FEMALE">Female</option>
+          <option value="MAN">Male</option>
+          <option value="WOMAN">Female</option>
         </select>
       </div>
 
@@ -115,7 +137,7 @@ function AddClientForm() {
       </div>
 
       <div className="col-12">
-        <button type="submit" className="btn btn-primary">Add Client</button>
+        <button type="submit" className="btn btn-success">Add Client</button>
       </div>
     </form>
     </div>
