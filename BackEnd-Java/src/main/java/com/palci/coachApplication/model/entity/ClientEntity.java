@@ -57,6 +57,9 @@ public class ClientEntity {
         if (currentWeight == 0){
             this.currentWeight = this.originalWeight;
         }
+        if (active == null){
+            this.active = true;
+        }
     }
 
 
