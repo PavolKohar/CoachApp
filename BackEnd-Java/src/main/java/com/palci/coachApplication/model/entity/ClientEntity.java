@@ -20,7 +20,9 @@ public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
 
-    //TODO - Add owner
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity owner;
 
     private String firstName;
 
