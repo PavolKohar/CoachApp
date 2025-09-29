@@ -21,6 +21,8 @@ public class ClientMapper {
         entity.setGoalWeight(request.getGoalWeight());
         entity.setSex(request.getSex());
         entity.setProgram(request.getProgram());
+        entity.setActivityLevel(request.getActivityLevel());
+        entity.setBirthDate(request.getBirthDate());
 
         return entity;
     }
@@ -44,6 +46,8 @@ public class ClientMapper {
         response.setSex(entity.getSex());
         response.setProgram(entity.getProgram());
         response.setActive(entity.getActive());
+        response.setActivityLevel(entity.getActivityLevel());
+        response.setBirthDate(entity.getBirthDate());
 
         return response;
     }
