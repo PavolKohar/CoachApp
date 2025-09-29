@@ -1,7 +1,7 @@
 package com.palci.coachApplication.model.entity;
 
 
-import com.palci.coachApplication.Sex;
+import com.palci.coachApplication.Enums.Sex;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +45,6 @@ public class ClientEntity {
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
-    // somethig for test 
 
     private String program;
 
