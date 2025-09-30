@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Contact from './pages/Contact'
 import AboutUs from './pages/AboutUs'
 import Register from './pages/Register'
+import Login from './pages/Login'
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<AboutUs />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
 
         
       </Routes>

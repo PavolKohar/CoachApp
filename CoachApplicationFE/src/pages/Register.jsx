@@ -1,7 +1,57 @@
-
+import { useState } from "react";
+import { registerUser } from "../api/users";
 
 
 function Register() {
+    const [formData, setFormData] = useState({
+        birthDate: '',
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNumber: ''
+    });
+    const [errors, setErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState('');
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+   const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await registerUser(formData);
+            console.log("User registered successfully:", response);
+            setSuccessMessage("Registration successful! You can now log in.");
+            setErrors({});
+            setFormData({
+                birthDate: '',
+                firstName: '',
+                lastName: '',
+                username: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                phoneNumber: ''
+            });
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data);
+            } else {
+                console.error("Error registering user:", error);
+            }
+            setSuccessMessage('');
+        }
+    }
+
+
     return (<>
     <div className="container my-5">
       <h2 className="text-center text-primary">Register</h2>
