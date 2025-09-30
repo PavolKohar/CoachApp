@@ -5,6 +5,7 @@ import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.request.ClientRequest;
 import com.palci.coachApplication.model.response.ClientResponse;
 import com.palci.coachApplication.service.ClientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/add-new")
-    public ResponseEntity<ClientResponse> addNewClient(@RequestBody ClientRequest request){
+    public ResponseEntity<ClientResponse> addNewClient(@Valid @RequestBody ClientRequest request){
         ClientEntity entity = clientService.createClient(request);
         ClientResponse response = ClientMapper.toResponse(entity);
 

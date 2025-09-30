@@ -1,10 +1,13 @@
 package com.palci.coachApplication.service.implementation;
 
+import com.palci.coachApplication.exception.DuplicateEmailException;
+import com.palci.coachApplication.exception.PasswordsDoNotEqualException;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.UserRequest;
 import com.palci.coachApplication.repository.UserRepository;
 import com.palci.coachApplication.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +18,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(boolean isAdmin, UserRequest request) {
+
+        // Checking if passwords equals
+        if (!request.getPassword().equals(request.getConfirmPassword())){
+            throw new PasswordsDoNotEqualException();
+        }
+
+
         UserEntity newUser = new UserEntity();
 
         newUser.setFirstName(request.getFirstName());
@@ -26,6 +36,11 @@ public class UserServiceImpl implements UserService {
         newUser.setBirthDate(request.getBirthDate());
         newUser.setAdmin(isAdmin);
 
-        return userRepository.save(newUser);
+        try {
+            return userRepository.save(newUser);
+        }catch (DataIntegrityViolationException e){
+            throw new DuplicateEmailException();
+        }
+
     }
 }

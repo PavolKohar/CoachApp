@@ -5,6 +5,7 @@ import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.UserRequest;
 import com.palci.coachApplication.model.response.UserResponse;
 import com.palci.coachApplication.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    ResponseEntity<UserResponse> createNewUser(@RequestBody UserRequest userRequest){ // TODO add validation
+    ResponseEntity<UserResponse> createNewUser(@Valid @RequestBody UserRequest userRequest){ // TODO add validation
         UserEntity newEntity = userService.createUser(false,userRequest);
         UserResponse response = UserMapper.toResponse(newEntity);
 
