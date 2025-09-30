@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import AddClientForm from './components/clients/AddClientForm'
+import { Route,Routes } from 'react-router-dom'
+import Header from './components/common/Header'
+import Home from './pages/Home'
+import Contact from './pages/Contact'
+import AboutUs from './pages/AboutUs'
+import Register from './pages/Register'
 
 
 
@@ -8,8 +13,16 @@ function App() {
 
   return (
     <>
-      <h1>Vitajte v Coach Application</h1>
-      <AddClientForm />
+      <Header />
+      
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/about' element={<AboutUs />} />
+        <Route path='/register' element={<Register />} />
+
+        
+      </Routes>
     </>
   )
 }
