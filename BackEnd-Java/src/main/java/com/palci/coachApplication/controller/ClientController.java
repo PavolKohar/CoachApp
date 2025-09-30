@@ -8,7 +8,11 @@ import com.palci.coachApplication.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/clients")
@@ -19,10 +23,17 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/add-new")
-    public ResponseEntity<ClientResponse> addNewClient(@Valid @RequestBody ClientRequest request){
+    public ResponseEntity<?> addNewClient(@Valid @RequestBody ClientRequest request, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+            Map<String,String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(err->
+                    errors.put(err.getField(),err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(Map.of("errors",errors));
+        }
+
         ClientEntity entity = clientService.createClient(request);
         ClientResponse response = ClientMapper.toResponse(entity);
-
         return ResponseEntity.ok(response);
     }
 

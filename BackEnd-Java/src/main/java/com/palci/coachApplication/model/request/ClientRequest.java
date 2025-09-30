@@ -37,11 +37,13 @@ public class ClientRequest {
     private LocalDate birthDate;
 
     @NotNull(message = "Enter activity level please")
-    @Size(min = 1,max = 5,message = "Activity level must be in range 1-5")
+    @Min(value = 1, message = "Activity level must be at least 1")
+    @Max(value = 5, message = "Activity level must be max 5")
     private int activityLevel;
 
     @NotNull(message = "Enter height please")
-    @Size(min = 140,max = 250,message = "Enter valid height")
+    @Min(value = 100,message = "Height must be at least 50 cm")
+    @Max(value = 250,message = "Height must be less than 250 cm")
     private double height;
 
     @NotNull(message = "Enter birth date please")
