@@ -8,12 +8,16 @@ import com.palci.coachApplication.repository.UserRepository;
 import com.palci.coachApplication.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService {
         newUser.setFirstName(request.getFirstName());
         newUser.setLastName(request.getLastName());
         newUser.setUserName(request.getUsername());
-        newUser.setPassword(request.getPassword()); // TODO encode password
+        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setEmail(request.getEmail());
         newUser.setPhoneNumber(request.getPhoneNumber());
         newUser.setBirthDate(request.getBirthDate());
@@ -42,5 +46,12 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateEmailException();
         }
 
+    }
+
+    // Method from UserDetail Service
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUserName(username)
+                .orElseThrow(()->new UsernameNotFoundException("Username not found"));
     }
 }

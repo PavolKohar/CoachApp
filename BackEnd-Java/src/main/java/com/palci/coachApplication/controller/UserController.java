@@ -19,11 +19,5 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping("/register")
-    ResponseEntity<UserResponse> createNewUser(@Valid @RequestBody UserRequest userRequest){ // TODO add validation
-        UserEntity newEntity = userService.createUser(false,userRequest);
-        UserResponse response = UserMapper.toResponse(newEntity);
 
-        return ResponseEntity.ok(response);
-    }
 }
