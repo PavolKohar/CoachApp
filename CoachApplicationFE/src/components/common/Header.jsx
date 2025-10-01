@@ -62,23 +62,26 @@ function MyHeader() {
 
               {/* Prihlásený používateľ */}
               {user ? (
-                <li className="nav-item dropdown">
-                  <span
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {user.username}
-                  </span>
-                  <ul className="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <span className="dropdown-item" role="button" onClick={handleLogout}>
-                        Logout
-                      </span>
-                    </li>
-                  </ul>
-                </li>
+                <div className="btn-group">
+                      <Link to={`/profile/${user.userId}`} className="btn btn-success">
+                        {user.username}
+                      </Link>
+                      <button
+                        type="button"
+                        className="btn btn-success dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <span className="visually-hidden">Toggle Dropdown</span>
+                      </button>
+                      <ul className="dropdown-menu dropdown-menu-end">
+                        <li>
+                          <button className="dropdown-item" onClick={handleLogout}>
+                            Logout
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
               ) : (
                 <>
                   <li className="nav-item">

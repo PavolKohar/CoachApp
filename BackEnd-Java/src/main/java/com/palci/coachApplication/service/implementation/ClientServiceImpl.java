@@ -2,17 +2,22 @@ package com.palci.coachApplication.service.implementation;
 
 import com.palci.coachApplication.mapper.ClientMapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
+import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.ClientRequest;
 import com.palci.coachApplication.repository.ClientRepository;
 import com.palci.coachApplication.service.ClientService;
+import com.palci.coachApplication.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final UserService userService;
 
     /**
      * Method to create client
@@ -21,6 +26,19 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public ClientEntity createClient(ClientRequest request) {
-        return clientRepository.save(ClientMapper.toEntity(request));
+        ClientEntity newClient = ClientMapper.toEntity(request);
+        newClient.setOwner(userService.getById(request.getOwnerId()));
+
+        return clientRepository.save(newClient);
+    }
+
+    @Override
+    public List<ClientEntity> getAllClientsByOwner(UserEntity user) {
+        return clientRepository.findAllByOwner(user);
+    }
+
+    @Override
+    public ClientEntity getClientById(Long clientId) {
+        return clientRepository.findById(clientId).orElseThrow();
     }
 }

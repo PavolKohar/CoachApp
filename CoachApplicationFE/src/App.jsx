@@ -8,6 +8,9 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import UserProfile from './pages/userPages/UserProfile'
 import { useAuth } from './context/AuthContext'
+import AddClientForm from './components/clients/AddClientForm'
+import ClientPage from './components/clients/ClientPage'
+
 
 
 
@@ -27,6 +30,9 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path="/profile/:userId" element={<UserProfile />} />
+        <Route path="/add-client/:userId" element={<AddClientForm />} />
+        <Route path="/clients/:clientId" element={<ClientPage />} />
+        
 
         
       </Routes>

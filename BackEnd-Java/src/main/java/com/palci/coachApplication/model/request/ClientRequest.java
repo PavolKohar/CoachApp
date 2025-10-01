@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 public class ClientRequest {
 
-    //TODO add validation for client
+   private Long ownerId;
 
     @NotBlank(message = "Enter first name please")
     private String firstName;

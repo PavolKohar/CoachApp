@@ -1,6 +1,9 @@
 package com.palci.coachApplication.model.response;
 
+import com.palci.coachApplication.model.entity.ClientEntity;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserResponse {
@@ -13,5 +16,7 @@ public class UserResponse {
     private String email;
 
     private String phoneNumber;
+
+    private List<ClientResponse> clients;
 
 }

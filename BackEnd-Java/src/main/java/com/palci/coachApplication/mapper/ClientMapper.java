@@ -3,8 +3,15 @@ package com.palci.coachApplication.mapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.request.ClientRequest;
 import com.palci.coachApplication.model.response.ClientResponse;
+import com.palci.coachApplication.repository.UserRepository;
+import com.palci.coachApplication.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 public class ClientMapper {
+
+
 
     public static ClientEntity toEntity(ClientRequest request){
         ClientEntity entity = new ClientEntity();

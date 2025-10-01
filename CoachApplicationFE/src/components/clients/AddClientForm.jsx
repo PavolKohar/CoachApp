@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import { addClient } from '../../api/clients';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function AddClientForm() {
+    const { userId } = useParams();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -18,7 +22,8 @@ function AddClientForm() {
         activityLevel: "",
         birthDate: "",
         sex: "MAN",
-        program: ""
+        program: "",
+        ownerId: userId
     });
 
     const[successMessage, setSuccessMessage] = useState("");
@@ -55,6 +60,7 @@ function AddClientForm() {
                 goalWeight: "", });
             setSuccessMessage("Client added successfully!");
             setErrorMessage("");
+            navigate(`/profile/${userId}`);
            
         } catch (error) {
             if(error.response && error.response.status === 400){
