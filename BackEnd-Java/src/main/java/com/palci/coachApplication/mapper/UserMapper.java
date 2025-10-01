@@ -9,7 +9,7 @@ public class UserMapper {
         UserResponse response = new UserResponse();
         response.setFirstName(entity.getFirstName());
         response.setLastName(entity.getLastName());
-        response.setUsername(entity.getUserName());
+        response.setUsername(entity.getUsername());
         response.setEmail(entity.getEmail());
         response.setPhoneNumber(entity.getPhoneNumber());
         response.setUserId(entity.getUserId());

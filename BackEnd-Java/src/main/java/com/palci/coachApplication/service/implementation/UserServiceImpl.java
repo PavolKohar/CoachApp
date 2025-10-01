@@ -48,10 +48,9 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    // Method from UserDetail Service
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUserName(username)
-                .orElseThrow(()->new UsernameNotFoundException("Username not found"));
+    public UserEntity getById(Long userId) {
+        return userRepository.findById(userId).orElseThrow();
     }
+
 }

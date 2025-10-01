@@ -8,15 +8,24 @@ import com.palci.coachApplication.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        UserResponse response = UserMapper.toResponse(user);
+        return ResponseEntity.ok(response);
+    }
+
 
 
 

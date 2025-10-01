@@ -1,5 +1,6 @@
 package com.palci.coachApplication.service.implementation;
 
+import com.palci.coachApplication.model.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,9 +28,11 @@ public class JwtService {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String username){
+    public String generateToken(UserEntity user){
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims,username);
+        claims.put("userId",user.getUserId());
+        claims.put("username",user.getUsername());
+        return createToken(claims,user.getUsername());
     }
 
     private String createToken(Map<String,Object> claims, String subject){

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -34,18 +35,23 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest){
+    public ResponseEntity<Map<String, String>> authenticate(@RequestBody AuthRequest authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
 
         UserEntity user = userRepository.findByUserName(authRequest.getUsername())
-                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        String token = jwtService.generateToken(user.getUsername());
+        String token = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(Map.of("token",token));
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
 
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/json") // <- Dôležité
+                .body(response);
     }
 
 
