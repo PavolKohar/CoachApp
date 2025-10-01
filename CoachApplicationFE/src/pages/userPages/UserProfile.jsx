@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getUserById } from "../../api/auth";
 import axios from "axios";
 
 
@@ -10,18 +11,22 @@ function UserProfile() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/users/${userId}`)
-            .then(response => {
-                setUser(response.data);
-            })
-            .catch(error => {
-                console.error("There was an error fetching the user data!", error);
-            });
+        const fetchUser = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const data = await getUserById(userId, token);
+                setUser(data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUser();
     }, [userId]);
 
     if (!user) {
         return <div>Loading...</div>;
-    }
+    }   
 
 
 

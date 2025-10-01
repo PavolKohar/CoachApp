@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerUser } from "../api/users";
+import { registerUser } from "../api/auth";
 
 
 function Register() {

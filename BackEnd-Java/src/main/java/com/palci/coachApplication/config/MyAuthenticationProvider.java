@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/*
 @Component
 @RequiredArgsConstructor
 public class MyAuthenticationProvider implements AuthenticationProvider {
@@ -39,3 +40,5 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }
+
+ */
