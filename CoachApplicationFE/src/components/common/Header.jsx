@@ -82,12 +82,12 @@ function MyHeader() {
               ) : (
                 <>
                   <li className="nav-item">
-                    <Link to="/login" className="btn btn-primary d-flex align-items-center">
+                    <Link to="/login" id="loginButton" className="btn btn-primary d-flex align-items-center">
                       Login
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/register" className="btn btn-success d-flex align-items-center">
+                    <Link to="/register" id="registerButton" className="btn btn-success d-flex align-items-center">
                       Register
                     </Link>
                   </li>
