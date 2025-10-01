@@ -6,6 +6,7 @@ import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.UserRequest;
 import com.palci.coachApplication.model.response.ClientResponse;
+import com.palci.coachApplication.model.response.ClientResponseSmall;
 import com.palci.coachApplication.model.response.UserResponse;
 import com.palci.coachApplication.service.ClientService;
 import com.palci.coachApplication.service.UserService;
@@ -31,7 +32,7 @@ public class UserController {
         UserEntity user = userService.getById(userId);
         UserResponse response = UserMapper.toResponse(user);
         List<ClientEntity> clients = clientService.getAllClientsByOwner(user);
-        List<ClientResponse> clientResponses = clients.stream().map(ClientMapper::toResponse).toList();
+        List<ClientResponseSmall> clientResponses = clients.stream().map(ClientMapper::toSmallResponse).toList();
         response.setClients(clientResponses);
         return ResponseEntity.ok(response);
     }

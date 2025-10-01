@@ -3,6 +3,7 @@ package com.palci.coachApplication.mapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.request.ClientRequest;
 import com.palci.coachApplication.model.response.ClientResponse;
+import com.palci.coachApplication.model.response.ClientResponseSmall;
 import com.palci.coachApplication.repository.UserRepository;
 import com.palci.coachApplication.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,19 @@ public class ClientMapper {
         response.setActive(entity.getActive());
         response.setActivityLevel(entity.getActivityLevel());
         response.setBirthDate(entity.getBirthDate());
+
+        return response;
+    }
+
+    public static ClientResponseSmall toSmallResponse(ClientEntity entity){
+        ClientResponseSmall response = new ClientResponseSmall();
+        response.setClientId(entity.getClientId());
+        response.setFirstName(entity.getFirstName());
+        response.setLastName(entity.getLastName());
+        response.setCurrentWeight(entity.getCurrentWeight());
+        response.setPhoneNumber(entity.getPhoneNumber());
+        response.setEmail(entity.getEmail());
+        response.setActive(entity.getActive());
 
         return response;
     }

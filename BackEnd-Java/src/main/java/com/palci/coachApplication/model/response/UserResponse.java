@@ -17,6 +17,6 @@ public class UserResponse {
 
     private String phoneNumber;
 
-    private List<ClientResponse> clients;
+    private List<ClientResponseSmall> clients;
 
 }

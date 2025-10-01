@@ -41,4 +41,23 @@ public class ClientResponse {
             return Period.between(birthDate,LocalDate.now()).getYears();
         }
     }
+
+    public int getProgress(){
+        double totalChange = Math.abs(goalWeight - originalWeight);
+        double achievedChange = Math.abs(currentWeight - originalWeight);
+
+        if (totalChange == 0) {
+            return 0;
+        }
+
+        if ((goalWeight>originalWeight)&&(currentWeight<originalWeight)){
+            return 0;
+        } else if ((goalWeight<originalWeight)&&(currentWeight>originalWeight)) {
+            return 0;
+        }
+
+        double progress = (achievedChange / totalChange) * 100;
+        return (int) Math.round(progress);
+
+    }
 }
