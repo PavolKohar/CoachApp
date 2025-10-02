@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Data
 public class ClientResponse {
@@ -33,6 +34,8 @@ public class ClientResponse {
     private String program;
 
     private Boolean active;
+
+    private List<WeightResponse> weightResponses;
 
     public int getAge(){
         if (birthDate == null){

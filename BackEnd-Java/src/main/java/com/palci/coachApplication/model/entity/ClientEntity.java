@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -58,6 +60,9 @@ public class ClientEntity {
     private String program;
 
     private Boolean active;
+
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
+    List<WeightEntity> weightHistory = new ArrayList<>();
 
     // TODO add some health constrains
 

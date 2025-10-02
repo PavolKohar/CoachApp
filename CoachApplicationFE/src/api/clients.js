@@ -32,3 +32,19 @@ export const getClientById = async (clientId) => {
 };
 
 
+export const updateCurrentWeight = async (clientId, newWeight) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/${clientId}/update-weight`, { newWeight },{   
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        console.log("Updated client data:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error updating weight:", error);
+        throw error;
+    }
+};
+
+
