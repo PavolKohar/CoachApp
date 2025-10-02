@@ -62,7 +62,9 @@ const handleSubmit = async (e) => {
 };
 
     if (!client) {
-        return <div>Loading...</div>;
+        return <div className="spinner-grow spinner-grow-sm" role="status">
+            <span className="visually-hidden">Loading...</span>
+            </div>;
     }
 
     return (
@@ -81,7 +83,7 @@ const handleSubmit = async (e) => {
 
       {/* PROGRESS BAR */}
       <div className="d-flex justify-content-between align-items-center mb-1">
-        <h5 className="mb-0">Progress</h5>
+        <h5 className="mb-0">Progress <small className={`${client.totalProgress ? 'text-success' : 'text-danger'}`} >{client.weightDifference} kg</small> </h5>
         <div><strong>Activity Level:</strong> {client.activityLevel}</div>
       </div>
       
@@ -157,6 +159,7 @@ const handleSubmit = async (e) => {
 
     </div>
   </div>
+  <hr />
 </div>
     );
 }

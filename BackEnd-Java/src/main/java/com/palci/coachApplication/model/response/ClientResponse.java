@@ -69,6 +69,7 @@ public class ClientResponse {
     }
 
     public double getWeightDifference(){
-        return Math.abs(originalWeight - currentWeight);
+        double difference =  Math.abs(originalWeight - currentWeight);
+        return Math.round(difference *10) / 10.0;
     }
 }
