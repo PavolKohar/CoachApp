@@ -63,4 +63,12 @@ public class ClientResponse {
         return (int) Math.round(progress);
 
     }
+
+    public boolean getTotalProgress(){
+        return getProgress()>0;
+    }
+
+    public double getWeightDifference(){
+        return Math.abs(originalWeight - currentWeight);
+    }
 }
