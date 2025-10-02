@@ -39,6 +39,7 @@ public class ClientMapper {
         ClientResponse response = new ClientResponse();
 
         response.setClientId(entity.getClientId());
+        response.setUserId(entity.getOwner().getUserId());
         response.setFirstName(entity.getFirstName());
         response.setLastName(entity.getLastName());
         response.setEmail(entity.getEmail());
@@ -62,6 +63,7 @@ public class ClientMapper {
 
     public static ClientResponseSmall toSmallResponse(ClientEntity entity){
         ClientResponseSmall response = new ClientResponseSmall();
+        response.setUserId(entity.getOwner().getUserId());
         response.setClientId(entity.getClientId());
         response.setFirstName(entity.getFirstName());
         response.setLastName(entity.getLastName());

@@ -13,7 +13,13 @@ function ClientCard ({client}){
         <p className="card-text">📧 {client.email}</p>
         <p className="card-text">📞 {client.phoneNumber}</p>
         
+        <div className="d-flex justify-content-between">
         <Link to={`/clients/${client.clientId}`} className="btn btn-outline-success">Details</Link>
+        <div className="">
+        <Link to={`/clients/add-note/${client.userId}/${client.clientId}`}className="btn btn-outline-success">📝</Link>
+        <Link to={`/clients/${client.clientId}`} className="btn btn-outline-success">All notes</Link>
+        </div>
+        </div>
       </div>
     </div>
     )

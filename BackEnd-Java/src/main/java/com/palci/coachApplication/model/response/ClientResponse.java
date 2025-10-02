@@ -11,6 +11,7 @@ import java.util.List;
 public class ClientResponse {
 
     private Long clientId;
+    private Long userId;
 
     private String firstName;
     private String lastName;

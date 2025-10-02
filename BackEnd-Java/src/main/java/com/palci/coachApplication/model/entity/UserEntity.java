@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,6 +42,9 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(mappedBy = "owner",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<ClientEntity> clients = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<NoteEntity> ownedNotes = new ArrayList<>();
 
     // TODO Add address and ičo dič for generating bills - IBAN , variable number generate ...
 

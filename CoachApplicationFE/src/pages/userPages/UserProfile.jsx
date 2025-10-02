@@ -60,6 +60,7 @@ function UserProfile() {
   </div>
 
   <Link to={`/add-client/${userId}`} className="btn btn-success">Add new client</Link>
+  <Link to={`/add-note/${userId}`} className="btn btn-success">Add note</Link>
   
 
   </div>

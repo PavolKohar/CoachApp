@@ -1,14 +1,17 @@
 package com.palci.coachApplication.controller;
 
 import com.palci.coachApplication.mapper.ClientMapper;
+import com.palci.coachApplication.mapper.NoteMapper;
 import com.palci.coachApplication.mapper.UserMapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
+import com.palci.coachApplication.model.entity.NoteEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
+import com.palci.coachApplication.model.request.NoteRequest;
 import com.palci.coachApplication.model.request.UserRequest;
-import com.palci.coachApplication.model.response.ClientResponse;
-import com.palci.coachApplication.model.response.ClientResponseSmall;
-import com.palci.coachApplication.model.response.UserResponse;
+import com.palci.coachApplication.model.request.WeightRequest;
+import com.palci.coachApplication.model.response.*;
 import com.palci.coachApplication.service.ClientService;
+import com.palci.coachApplication.service.NotesService;
 import com.palci.coachApplication.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ public class UserController {
 
     private final UserService userService;
     private final ClientService clientService;
+    private final NotesService notesService;
 
 
     @GetMapping("/{userId}")
@@ -34,6 +38,15 @@ public class UserController {
         List<ClientEntity> clients = clientService.getAllClientsByOwner(user);
         List<ClientResponseSmall> clientResponses = clients.stream().map(ClientMapper::toSmallResponse).toList();
         response.setClients(clientResponses);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping("/add-note/{userId}")
+    public ResponseEntity<NoteResponse> createNote(@PathVariable Long userId, @RequestBody NoteRequest request){
+        NoteEntity entity = notesService.createNote(userId,request);
+        NoteResponse response = NoteMapper.toResponse(entity);
+
         return ResponseEntity.ok(response);
     }
 

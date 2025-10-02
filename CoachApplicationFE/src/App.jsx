@@ -10,6 +10,7 @@ import UserProfile from './pages/userPages/UserProfile'
 import { useAuth } from './context/AuthContext'
 import AddClientForm from './components/clients/AddClientForm'
 import ClientPage from './components/clients/ClientPage'
+import AddNote from './components/AddNote'
 
 
 
@@ -31,7 +32,9 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path="/profile/:userId" element={<UserProfile />} />
         <Route path="/add-client/:userId" element={<AddClientForm />} />
+        <Route path="/add-note/:userId" element={<AddNote />} />
         <Route path="/clients/:clientId" element={<ClientPage />} />
+        <Route path="/clients/add-note/:userId/:clientId" element={<AddNote />} />
         
 
         

@@ -47,4 +47,18 @@ export const updateCurrentWeight = async (clientId, newWeight) => {
     }
 };
 
+export const addNoteToClient = async (userId ,clientId, noteData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/add-note/${userId}/${clientId}`, noteData,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error adding note to client:", error);
+        throw error;
+    }
+};
+
 
