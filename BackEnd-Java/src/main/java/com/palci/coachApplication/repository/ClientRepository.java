@@ -9,4 +9,6 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<ClientEntity,Long> {
 
     List<ClientEntity> findAllByOwner(UserEntity owner);
+
+    List<String> findDistinctProgramByOwner(UserEntity owner);
 }

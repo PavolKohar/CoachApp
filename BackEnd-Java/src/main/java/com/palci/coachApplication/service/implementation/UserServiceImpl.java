@@ -4,6 +4,7 @@ import com.palci.coachApplication.exception.DuplicateEmailException;
 import com.palci.coachApplication.exception.PasswordsDoNotEqualException;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.UserRequest;
+import com.palci.coachApplication.repository.ClientRepository;
 import com.palci.coachApplication.repository.UserRepository;
 import com.palci.coachApplication.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +14,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ClientRepository clientRepository;
 
 
     @Override
@@ -51,6 +55,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getById(Long userId) {
         return userRepository.findById(userId).orElseThrow();
+    }
+
+    @Override
+    public List<String> getAllUserPrograms(Long userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow();
+        return clientRepository.findDistinctProgramByOwner(user);
     }
 
 }

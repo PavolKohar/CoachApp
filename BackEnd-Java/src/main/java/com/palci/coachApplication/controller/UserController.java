@@ -59,6 +59,13 @@ public class UserController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/programs/{userId}")
+    public ResponseEntity<List<String>> getUserPrograms(@PathVariable Long userId){
+        List<String> programs = userService.getAllUserPrograms(userId);
+
+        return ResponseEntity.ok(programs);
+    }
+
 
 
 

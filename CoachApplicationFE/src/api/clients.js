@@ -17,6 +17,7 @@ export const addClient = async (clientData) => {
     }
 };
 
+
 export const getClientById = async (clientId) => {
     try {
         const response = await axios.get(`${BASE_URL}/${clientId}`,{

@@ -30,3 +30,17 @@ export const getUserNotes = async (userId) => {
         throw error;
     }
 };
+
+export const getUserPrograms = async (userId) => {
+    try{
+        const response = await axios.get(`${BASE_URL}/programs/${userId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+    });
+    return response.data
+    }catch (error){
+        console.error("Error fetching program data:", error)
+        throw error;
+    }
+};
