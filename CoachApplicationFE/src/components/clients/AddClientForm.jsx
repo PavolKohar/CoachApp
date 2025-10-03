@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { addClient } from '../../api/clients';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import ProgramSelector from './ProgramSelector';
 
 
 function AddClientForm() {
@@ -200,7 +201,7 @@ function AddClientForm() {
 
       <div className="col-md-6">
         <label className="form-label">Program</label>
-        <input type="text" className="form-control" name="program" value={formData.program} onChange={handleChange} />
+        <ProgramSelector handleInputChange={handleChange} newProgram={formData.program}/>
         {errors.program &&(
         <small className="text-danger">{errors.program}</small>
         )}
