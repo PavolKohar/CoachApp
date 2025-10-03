@@ -61,6 +61,20 @@ export const updateCurrentWeight = async (clientId, newWeight) => {
     }
 };
 
+export const toggleActive = async (clientId) => {
+    try{
+        const response = await axios.post(`${BASE_URL}/${clientId}/toggle-active`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data
+    }catch(error){
+        console.error("Error toggle active",error);
+        throw error;
+    }
+}
+
 export const addNoteToClient = async (userId ,clientId, noteData) => {
     try {
         const response = await axios.post(`${BASE_URL}/add-note/${userId}/${clientId}`, noteData,{

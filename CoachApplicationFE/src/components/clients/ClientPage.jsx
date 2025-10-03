@@ -101,7 +101,20 @@ const handleSubmit = async (e) => {
       {/* PROGRESS BAR */}
       <div className="d-flex justify-content-between align-items-center mb-1">
         <h5 className="mb-0">Progress <small className={`${client.totalProgress ? 'text-success' : 'text-danger'}`} >{client.weightDifference} kg</small> </h5>
-        <div><strong>Activity Level:</strong> {client.activityLevel}</div>
+        <div className="d-flex gap-2 align-items-center"> 
+          <strong>Activity Level:</strong> {client.activityLevel}
+
+          <div className="dropdown">
+              <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuDark" data-bs-toggle="dropdown" aria-expanded="false">
+                ⚙️
+              </button>
+              <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuDark">
+                <li><a className="dropdown-item" href="#">Edit client</a></li>
+                <li><a className="dropdown-item" href="#">Statistic</a></li>
+                <li><a className="dropdown-item" href="#">Create training plan</a></li>
+              </ul>
+            </div>
+          </div>
       </div>
       
       <div className="progress mb-4" style={{ height: "25px" }}>
