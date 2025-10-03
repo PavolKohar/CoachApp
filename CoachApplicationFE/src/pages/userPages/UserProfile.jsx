@@ -66,8 +66,24 @@ function UserProfile() {
   
 
   </div>
+  <div className="container-fluid">
+
+
   
   <hr />
+  <h2 className="text-center text-success mb-4">Your Clients</h2>
+    <div className="dropdown">
+      <button className="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuDark" data-bs-toggle="dropdown" aria-expanded="false">
+        Nefunkčné - filtrovanie klientov
+      </button>
+      <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuDark">
+        <li><a className="dropdown-item" href="#">Active</a></li>
+        <li><a className="dropdown-item" href="#">Passive</a></li>
+        <li><a className="dropdown-item" href="#">Man</a></li>
+        <li><a className="dropdown-item" href="#">Woman</a></li>
+      </ul>
+    </div>
+   
     <ClientList clients={user.clients || []} />
   
 
@@ -75,7 +91,7 @@ function UserProfile() {
 
 
 
-
+  </div>
 
 </>
   );

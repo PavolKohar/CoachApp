@@ -8,6 +8,7 @@ public class WeightMapper {
 
     public static WeightResponse toResponse(WeightEntity entity){
         WeightResponse response = new WeightResponse();
+        response.setId(entity.getChangeId());
         response.setOldWeight(entity.getOldWeight());
         response.setDate(entity.getDate());
         response.setNewWeight(entity.getNewWeight());

@@ -2,6 +2,7 @@ import { getClientById } from "../../api/clients";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { updateCurrentWeight } from "../../api/clients";
+import WeightList from "./WeightList";
 
 function ClientPage(){
     const { clientId } = useParams();
@@ -161,6 +162,8 @@ const handleSubmit = async (e) => {
   </div>
   <hr />
   <h2>Upcoming trainings</h2>
+  <hr />
+  <WeightList weightRecords={client.weightResponses} />
 </div>
     );
 }

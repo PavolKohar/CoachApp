@@ -7,6 +7,8 @@ import java.time.LocalDate;
 @Data
 public class WeightResponse {
 
+    private Long id;
+
     private LocalDate date;
 
     private double oldWeight;
