@@ -13,4 +13,6 @@ public interface WeightService {
     WeightEntity updateCurrentWeight(Long clientId,WeightRequest request);
 
     List<WeightResponse> getWeightHistoryByClient(ClientEntity entity);
+
+    void deleteRecordById(Long id);
 }

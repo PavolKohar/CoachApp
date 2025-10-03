@@ -1,7 +1,7 @@
 import WeightRecord from "./WeightRecord";
 import { Link } from "react-router-dom";
 
-function WeightList({ weightRecords }) {
+function WeightList({ weightRecords, onDelete }) {
   return (
 <div className="my-4">
   
@@ -24,7 +24,7 @@ function WeightList({ weightRecords }) {
             .reverse() // otočí poradie (najnovší záznam prvý)
             .map((rec) => (
             <div key={rec.id} style={{ scrollSnapAlign: "start" }}>
-                <WeightRecord oneRecord={rec} />
+                <WeightRecord oneRecord={rec} onDelete={onDelete} />
             </div>
             ))
         )}

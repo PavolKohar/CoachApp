@@ -53,4 +53,9 @@ public class WeightServiceImpl implements WeightService {
         List<WeightEntity> entities = weightRepository.findAllByClient(entity);
         return entities.stream().map(WeightMapper::toResponse).toList();
     }
+
+    @Override
+    public void deleteRecordById(Long id) {
+        weightRepository.deleteById(id);
+    }
 }

@@ -13,4 +13,6 @@ public interface ClientService {
     List<ClientEntity> getAllClientsByOwner(UserEntity user);
 
     ClientEntity getClientById(Long clientId);
+
+    ClientEntity toggleActive(Long clientId);
 }

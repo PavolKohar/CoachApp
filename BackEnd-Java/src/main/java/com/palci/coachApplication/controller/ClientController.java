@@ -94,5 +94,21 @@ public class ClientController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("{clientId}/toggle-active")
+    public ResponseEntity<ClientResponse> toggleActive(@PathVariable Long clientId){
+        ClientEntity client = clientService.toggleActive(clientId);
+        ClientResponse response = ClientMapper.toResponse(client);
+
+        return ResponseEntity.ok(response);
+
+    }
+
+    @DeleteMapping("/remove-weight-record/{id}")
+    public ResponseEntity<Void> removeWeightRecord(@PathVariable Long id){
+        weightService.deleteRecordById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

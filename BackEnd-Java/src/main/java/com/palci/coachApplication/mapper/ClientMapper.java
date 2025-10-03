@@ -71,6 +71,8 @@ public class ClientMapper {
         response.setPhoneNumber(entity.getPhoneNumber());
         response.setEmail(entity.getEmail());
         response.setActive(entity.getActive());
+        response.setProgram(entity.getProgram());
+        response.setSex(entity.getSex());
 
         return response;
     }

@@ -41,4 +41,12 @@ public class ClientServiceImpl implements ClientService {
     public ClientEntity getClientById(Long clientId) {
         return clientRepository.findById(clientId).orElseThrow();
     }
+
+    @Override
+    public ClientEntity toggleActive(Long clientId) {
+        ClientEntity client = clientRepository.findById(clientId).orElseThrow();
+        client.setActive(!client.getActive());
+
+        return clientRepository.save(client);
+    }
 }

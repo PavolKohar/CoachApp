@@ -5,6 +5,7 @@ import { updateCurrentWeight } from "../../api/clients";
 import WeightList from "./WeightList";
 import { Link } from "react-router-dom";
 import WeightChart from "./WeightChart";
+import { toggleActive} from "../../api/clients";
 
 function ClientPage(){
     const { clientId } = useParams();
@@ -39,7 +40,27 @@ function ClientPage(){
         fetchClient();
     }, [clientId]);
 
-    
+      const handleActiveButton = () => {
+        const fetchClientAct = async () => {
+          try {
+            await toggleActive(clientId); // len toggle
+            const updatedClient = await getClientById(clientId); // načítaj komplet
+            setClient(updatedClient);
+
+            const weights = updatedClient.weightResponses.map(w => ({
+              date: w.date,
+              weight: w.newWeight
+            }));
+
+            setWeightData(weights);
+
+          } catch (error) {
+            console.error("Error activating client:", error);
+          }
+        };
+
+        fetchClientAct();
+      };
 
     const handleInputChange = (e) => {
         const { value } = e.target;
@@ -75,6 +96,15 @@ const handleSubmit = async (e) => {
     
   }
 };
+
+const handleDeleteWeightRecord = (idToDelete) =>{
+  const updatedWeightRecords = client.weightResponses.filter(w=> w.id !== idToDelete);
+  const updatedClient = {...client, weightResponses: updatedWeightRecords};
+  setClient(updatedClient)
+
+  const updatedChartData = weightData.filter(w=> w.id !== idToDelete);
+  setWeightData(updatedChartData)
+}
 
 
 
@@ -112,6 +142,14 @@ const handleSubmit = async (e) => {
                 <li><a className="dropdown-item" href="#">Edit client</a></li>
                 <li><a className="dropdown-item" href="#">Statistic</a></li>
                 <li><a className="dropdown-item" href="#">Create training plan</a></li>
+                <li>
+                      <button
+                        className={`dropdown-item ${client.active ? 'text-danger' : 'text-success'}`}
+                        onClick={handleActiveButton}
+                      >
+                        {client.active ? 'Deactivate' : 'Activate'}
+                      </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -207,7 +245,7 @@ const handleSubmit = async (e) => {
           {showChart ? (
             <WeightChart records={weightData} />
           ) : (
-            <WeightList weightRecords={client.weightResponses} />
+            <WeightList weightRecords={client.weightResponses} onDelete={handleDeleteWeightRecord} />
           )}
 </div>
     );
