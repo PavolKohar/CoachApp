@@ -1,9 +1,13 @@
 import WeightRecord from "./WeightRecord";
+import { Link } from "react-router-dom";
 
 function WeightList({ weightRecords }) {
   return (
 <div className="my-4">
-  <h5 className="mb-3">📈 Weight History</h5>
+  
+  
+
+  
   <div
     className="d-flex flex-row gap-3 overflow-auto"
     style={{

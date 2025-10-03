@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { updateCurrentWeight } from "../../api/clients";
 import WeightList from "./WeightList";
+import { Link } from "react-router-dom";
+import WeightChart from "./WeightChart";
 
 function ClientPage(){
     const { clientId } = useParams();
@@ -10,6 +12,8 @@ function ClientPage(){
     const [newWeight, setNewWeight] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [weightData, setWeightData] = useState([]);
+    const [showChart, setShowChart] = useState(false);
 
 
     useEffect(() => {
@@ -17,9 +21,14 @@ function ClientPage(){
             try {
                 const data = await getClientById(clientId);
                 setClient(data);
+                const weightData = data.weightResponses.map(w=> ({
+                      date: w.date,
+                      weight: w.newWeight
+                    }));
+                    setWeightData(weightData)
                 if(data && data.currentWeight !== undefined){
                     setNewWeight(data.currentWeight);
-                    console.log("Initial weight set to:", data.currentWeight);
+                  
                 }
                 console.log("Fetched client data:", data);
             } catch (error) {
@@ -41,7 +50,12 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     await updateCurrentWeight(clientId, newWeight); // váha sa aktualizuje na backende
-    const updatedClient = await getClientById(clientId); // získa sa aktualizovaný klient
+    const updatedClient = await getClientById(clientId);
+                    const weightData = updatedClient.weightResponses.map(w=> ({
+                      date: w.date,
+                      weight: w.newWeight
+                    }));
+                    setWeightData(weightData) // získa sa aktualizovaný klient
     setClient(updatedClient); // stav klienta sa aktualizuje s novými dátami
     
     setSuccessMessage("Weight updated successfully to " + newWeight + " kg");
@@ -61,6 +75,8 @@ const handleSubmit = async (e) => {
     
   }
 };
+
+
 
     if (!client) {
         return <div className="spinner-grow spinner-grow-sm" role="status">
@@ -163,7 +179,23 @@ const handleSubmit = async (e) => {
   <hr />
   <h2>Upcoming trainings</h2>
   <hr />
-  <WeightList weightRecords={client.weightResponses} />
+  <div className="d-flex justify-content-between">
+  <h5 className="mb-3">📈 Weight History</h5>
+  </div>
+<div className="mb-1">
+        <button
+        className="btn btn-success"
+        onClick={() => setShowChart(prev => !prev)}
+      >
+              {showChart ? "📋 Show List" : "📈 Show Chart"}
+            </button>
+          </div>
+
+          {showChart ? (
+            <WeightChart records={weightData} />
+          ) : (
+            <WeightList weightRecords={client.weightResponses} />
+          )}
 </div>
     );
 }
