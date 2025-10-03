@@ -21,7 +21,7 @@ public class NoteEntity {
 
     private LocalDate date;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String note;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

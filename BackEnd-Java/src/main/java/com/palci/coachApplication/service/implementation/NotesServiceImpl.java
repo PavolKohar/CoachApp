@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +39,19 @@ public class NotesServiceImpl implements NotesService {
 
         return notesRepository.save(entity);
 
+    }
+
+    @Override
+    public List<NoteEntity> getUserNotes(Long userId) {
+        UserEntity owner = userService.getById(userId);
+
+        return notesRepository.findAllByOwner(owner);
+    }
+
+    @Override
+    public List<NoteEntity> getClientsNotes(Long clientId) {
+        ClientEntity client = clientService.getClientById(clientId);
+
+        return notesRepository.findAllByClient(client);
     }
 }

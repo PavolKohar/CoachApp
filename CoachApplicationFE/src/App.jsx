@@ -11,6 +11,8 @@ import { useAuth } from './context/AuthContext'
 import AddClientForm from './components/clients/AddClientForm'
 import ClientPage from './components/clients/ClientPage'
 import AddNote from './components/AddNote'
+import NotePage from './components/clients/NotePage'
+import UNotePage from './pages/userPages/UNotePage'
 
 
 
@@ -35,6 +37,8 @@ function App() {
         <Route path="/add-note/:userId" element={<AddNote />} />
         <Route path="/clients/:clientId" element={<ClientPage />} />
         <Route path="/clients/add-note/:userId/:clientId" element={<AddNote />} />
+        <Route path="/all-notes/:userId" element={<UNotePage />} />
+        <Route path="/all-notes/:userId/:clientId" element={<NotePage />} />
         
 
         

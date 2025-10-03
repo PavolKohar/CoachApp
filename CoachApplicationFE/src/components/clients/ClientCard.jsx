@@ -17,7 +17,7 @@ function ClientCard ({client}){
         <Link to={`/clients/${client.clientId}`} className="btn btn-outline-success">Details</Link>
         <div className="">
         <Link to={`/clients/add-note/${client.userId}/${client.clientId}`}className="btn btn-outline-success">📝</Link>
-        <Link to={`/clients/${client.clientId}`} className="btn btn-outline-success">All notes</Link>
+        <Link to={`/all-notes/${client.userId}/${client.clientId}`} className="btn btn-outline-success">All notes</Link>
         </div>
         </div>
       </div>

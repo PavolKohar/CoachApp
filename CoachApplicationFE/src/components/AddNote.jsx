@@ -2,6 +2,7 @@ import { addNoteToUser } from "../api/users";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { addNoteToClient } from "../api/clients";
 
 
 
@@ -10,18 +11,29 @@ function AddNote() {
     const [noteContent, setNoteContent] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const noteData = { note: noteContent, clientId: clientId };
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const noteData = { note: noteContent, clientId: clientId };
+
+        if (clientId) {
+            // poznámka pre klienta
+            const response = await addNoteToClient(userId, clientId, noteData);
+            console.log("Note added successfully to client:", response);
+            console.log("Test 1");
+        } else {
+            // poznámka čisto pre usera
             const response = await addNoteToUser(userId, noteData);
-            console.log("Note added successfully:", response);
-            setNoteContent("");
-            navigate(-1); // Navigate back to the previous page
-        } catch (error) {
-            console.error("Error adding note:", error);
+            console.log("Note added successfully to user:", response);
+            console.log("Test 2");
         }
+
+        setNoteContent("");
+        navigate(-1); // späť na predchádzajúcu stránku
+    } catch (error) {
+        console.error("Error adding note:", error);
     }
+};
 
 
   return (<>

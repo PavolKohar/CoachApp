@@ -30,6 +30,19 @@ export const getClientById = async (clientId) => {
         throw error;
     }
 };
+export const getClientByIdSmall = async (clientId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/${clientId}/small`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching client:", error);
+        throw error;
+    }
+};
 
 
 export const updateCurrentWeight = async (clientId, newWeight) => {
@@ -57,6 +70,21 @@ export const addNoteToClient = async (userId ,clientId, noteData) => {
         return response.data;
     } catch (error) {
         console.error("Error adding note to client:", error);
+        throw error;
+    }
+};
+
+
+export const getClientNotes = async (clientId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/all-notes/${clientId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching client notes:", error);
         throw error;
     }
 };

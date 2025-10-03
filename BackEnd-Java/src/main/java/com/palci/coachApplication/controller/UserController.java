@@ -51,6 +51,15 @@ public class UserController {
     }
 
 
+    @GetMapping("/all-notes/{userId}")
+    public ResponseEntity<List<NoteResponse>> getAllUsersNotes(@PathVariable Long userId){
+        List<NoteEntity> entities = notesService.getUserNotes(userId);
+        List<NoteResponse> responses = entities.stream().map(NoteMapper::toResponse).toList();
+
+        return ResponseEntity.ok(responses);
+    }
+
+
 
 
 }

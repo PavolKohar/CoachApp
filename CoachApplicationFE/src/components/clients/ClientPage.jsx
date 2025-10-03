@@ -160,6 +160,7 @@ const handleSubmit = async (e) => {
     </div>
   </div>
   <hr />
+  <h2>Upcoming trainings</h2>
 </div>
     );
 }

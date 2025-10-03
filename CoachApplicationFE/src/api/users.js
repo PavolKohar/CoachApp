@@ -16,3 +16,17 @@ export const addNoteToUser = async (userId, noteData) => {
         throw error;
     }
 };
+
+export const getUserNotes = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/all-notes/${userId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user notes:", error);
+        throw error;
+    }
+};
