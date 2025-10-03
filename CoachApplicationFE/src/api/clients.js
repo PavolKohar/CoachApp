@@ -117,4 +117,18 @@ export const deleteWeightRecord = async (id) => {
     }
 }
 
+export const deleteNote = async (id) => {
+    try {
+        await axios.delete(`${BASE_URL}/remove-note/${id}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        });
+    } catch (error) {
+        console.error("Error deleting note: ", error)
+        throw error; 
+    }
+    
+}
+
 

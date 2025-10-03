@@ -1,7 +1,7 @@
 import NoteCard from "./NoteCard";
 import { Link } from "react-router-dom";
 
-function NoteList({ notes , onNoteClick})  {
+function NoteList({ notes , onNoteClick , onDelete})  {
     return (
         <div className="d-flex flex-column align-items-center">
   <div className="card shadow mb-4" style={{ width: "100%", maxWidth: "300px" ,maxHeight: "500px" }}>
@@ -14,7 +14,7 @@ function NoteList({ notes , onNoteClick})  {
         
 
       ) : (
-        notes.map((note) => <NoteCard key={note.id} note={note} onClick={()=> onNoteClick(note)} />)
+        notes.map((note) => <NoteCard key={note.id} note={note} onDelete={onDelete}  onClick={()=> onNoteClick(note)} />)
       )}
     </div>
   </div>

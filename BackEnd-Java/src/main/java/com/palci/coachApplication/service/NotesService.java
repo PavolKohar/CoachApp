@@ -12,4 +12,6 @@ public interface NotesService {
     List<NoteEntity> getUserNotes(Long userId);
 
     List<NoteEntity> getClientsNotes(Long clientId);
+
+    void deleteNoteById(Long id);
 }

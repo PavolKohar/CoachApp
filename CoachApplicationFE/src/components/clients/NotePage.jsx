@@ -32,6 +32,12 @@ function NotePage() {
         fetchNotes();
     }, [userId, clientId]);
 
+    const handleDeleteNote = (idToDelete) =>{
+        const updatedNotes = notes.filter(n=> n.id !== idToDelete);
+        console.log(updatedNotes)
+        setNotes(updatedNotes)
+    }
+
   if (!client || !notes) {
     return (
         <div className="d-flex justify-content-center mt-5">
@@ -53,7 +59,7 @@ function NotePage() {
 
             <hr />
             <div className="col-4">
-                <NoteList notes={notes} onNoteClick={setSelectedNote} />
+                <NoteList notes={notes} onNoteClick={setSelectedNote} onDelete={handleDeleteNote} />
             </div>
             <div className="col-7 ms-5">
                 <NotePreview note={selectedNote} />

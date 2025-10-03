@@ -54,4 +54,9 @@ public class NotesServiceImpl implements NotesService {
 
         return notesRepository.findAllByClient(client);
     }
+
+    @Override
+    public void deleteNoteById(Long id) {
+        notesRepository.deleteById(id);
+    }
 }

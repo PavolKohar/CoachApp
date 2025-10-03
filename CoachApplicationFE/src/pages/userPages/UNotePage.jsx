@@ -40,6 +40,13 @@ function UNotePage() {
         ? notes
         : notes.filter((note) => note.clientId === parseInt(selectedClient));
 
+
+        const handleDeleteNote = (idToDelete) =>{
+        const updatedNotes = notes.filter(n=> n.id !== idToDelete);
+        console.log(updatedNotes)
+        setNotes(updatedNotes)
+    }
+
     if (!notes) {
         return <div className="spinner-grow spinner-grow-sm" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -68,7 +75,7 @@ function UNotePage() {
                 </select>
                 </div>
             <div className="col-4">
-                <NoteList notes={filteredNotes} onNoteClick={setSelectedNote} />
+                <NoteList notes={filteredNotes} onNoteClick={setSelectedNote} onDelete={handleDeleteNote} />
             </div>
             <div className="col-7 ms-5">
                 <NotePreview note={selectedNote} />

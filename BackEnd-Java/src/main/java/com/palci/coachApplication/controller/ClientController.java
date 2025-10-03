@@ -110,5 +110,12 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/remove-note/{id}")
+    public ResponseEntity<Void> removeNote(@PathVariable Long id){
+        notesService.deleteNoteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
