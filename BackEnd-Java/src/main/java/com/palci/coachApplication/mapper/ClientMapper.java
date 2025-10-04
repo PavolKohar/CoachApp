@@ -1,6 +1,7 @@
 package com.palci.coachApplication.mapper;
 
 import com.palci.coachApplication.model.entity.ClientEntity;
+import com.palci.coachApplication.model.request.ClientContactRequest;
 import com.palci.coachApplication.model.request.ClientRequest;
 import com.palci.coachApplication.model.response.ClientResponse;
 import com.palci.coachApplication.model.response.ClientResponseSmall;
