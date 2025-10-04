@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../api/auth";
+import { useNavigate } from "react-router-dom";
 
 
 function Register() {
@@ -15,6 +16,7 @@ function Register() {
     });
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -41,6 +43,7 @@ function Register() {
                 confirmPassword: '',
                 phoneNumber: ''
             });
+            navigate("/login")
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data);
