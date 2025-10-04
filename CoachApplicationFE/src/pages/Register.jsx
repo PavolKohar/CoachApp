@@ -16,6 +16,7 @@ function Register() {
     });
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -46,10 +47,12 @@ function Register() {
             navigate("/login")
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                setErrors(error.response.data);
+              const backkendErrors = error.response.data.errors || {};
+                setErrors(backkendErrors);
             } else {
                 console.error("Error registering user:", error);
             }
+            setErrorMessage("Failed to register. Please try again.");
             setSuccessMessage('');
         }
     }
@@ -61,6 +64,7 @@ function Register() {
       {successMessage && (
         <div className="alert alert-success">{successMessage}</div>
       )}
+      {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
 
       <form onSubmit={handleSubmit} className="row g-3">
         <div className="col-md-6">

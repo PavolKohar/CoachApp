@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +57,15 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    ResponseEntity<UserResponse> createNewUser(@Valid @RequestBody UserRequest userRequest){ // TODO add validation
+    ResponseEntity<?> createNewUser(@Valid @RequestBody UserRequest userRequest, BindingResult result){
+
+        if (result.hasErrors()){
+            Map<String,String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(err->
+                    errors.put(err.getField(),err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(Map.of("errors",errors));
+        }
+
         UserEntity newEntity = userService.createUser(false,userRequest);
         UserResponse response = UserMapper.toResponse(newEntity);
 
