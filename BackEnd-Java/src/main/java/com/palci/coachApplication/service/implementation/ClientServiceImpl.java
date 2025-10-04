@@ -1,5 +1,6 @@
 package com.palci.coachApplication.service.implementation;
 
+import com.palci.coachApplication.exception.ResourceNotFoundException;
 import com.palci.coachApplication.mapper.ClientMapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
@@ -42,12 +43,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientEntity getClientById(Long clientId) {
-        return clientRepository.findById(clientId).orElseThrow();
+        return getClientOrThrow(clientId);
     }
 
     @Override
     public ClientEntity toggleActive(Long clientId) {
-        ClientEntity client = clientRepository.findById(clientId).orElseThrow();
+        ClientEntity client = getClientOrThrow(clientId);
         client.setActive(!client.getActive());
 
         return clientRepository.save(client);
@@ -55,7 +56,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientEntity updateContactClient(Long clientId, ClientContactRequest request) {
-        ClientEntity client = clientRepository.findById(clientId).orElseThrow(); // TODO - create own method to fetch client and throw exception
+        ClientEntity client = getClientOrThrow(clientId);
         client.setFirstName(request.getFirstName());
         client.setLastName(request.getLastName());
         client.setEmail(request.getEmail());
@@ -66,7 +67,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientEntity updateAddressClient(Long clientId, ClientAddressRequest request) {
-        ClientEntity client = clientRepository.findById(clientId).orElseThrow();
+        ClientEntity client = getClientOrThrow(clientId);
 
         client.setCountry(request.getCountry());
         client.setCity(request.getCity());
@@ -78,12 +79,20 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientEntity updateFitnessClient(Long clientId, ClientFitnessRequest request) {
-        ClientEntity client = clientRepository.findById(clientId).orElseThrow();
+        ClientEntity client = getClientOrThrow(clientId);
 
         client.setActivityLevel(request.getActivityLevel());
         client.setGoalWeight(request.getGoalWeight());
         client.setProgram(request.getProgram());
 
         return clientRepository.save(client);
+    }
+
+
+    // helper
+
+    private ClientEntity getClientOrThrow(Long clientId) {
+        return clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + clientId));
     }
 }
