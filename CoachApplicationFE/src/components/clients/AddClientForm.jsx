@@ -40,41 +40,55 @@ function AddClientForm() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await addClient(formData);
-            console.log("Client added successfully:", response);
-            // Optionally reset the form or provide feedback to the user
-            setFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                phoneNumber: "",
-                country: "",
-                city: "",
-                zipCode: "",
-                street: "",
-                height: "",
-                activityLevel: "",
-                birthDate: "",
-                originalWeight: "",
-                goalWeight: "", });
-            setSuccessMessage("Client added successfully!");
-            setErrorMessage("");
-            navigate(`/profile/${userId}`);
-           
-        } catch (error) {
-            if(error.response && error.response.status === 400){
-                const backkendErrors = error.response.data.errors || {};
-                setErrors(backkendErrors);
-            }else{alert("An unexpected error occurred. Please try again later.");}
-            
-            console.error("Error adding client:", error);
-            setErrorMessage("Failed to add client. Please try again.");
-            setSuccessMessage("");
-        }
-         
+    e.preventDefault();
+
+    // Trim meno a priezvisko
+    const trimmedFirstName = formData.firstName.trim();
+    const trimmedLastName = formData.lastName.trim();
+
+    // Vytvorené nové formData s orezanými údajmi
+    const cleanedFormData = {
+        ...formData,
+        firstName: trimmedFirstName,
+        lastName: trimmedLastName
     };
+
+    try {
+        const response = await addClient(cleanedFormData); // posielame trimmed dáta
+        console.log("Client added successfully:", response);
+
+        setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: "",
+            country: "",
+            city: "",
+            zipCode: "",
+            street: "",
+            height: "",
+            activityLevel: "",
+            birthDate: "",
+            originalWeight: "",
+            goalWeight: ""
+        });
+
+        setSuccessMessage("Client added successfully!");
+        setErrorMessage("");
+        navigate(`/profile/${userId}`);
+    } catch (error) {
+        if (error.response && error.response.status === 400) {
+            const backkendErrors = error.response.data.errors || {};
+            setErrors(backkendErrors);
+        } else {
+            alert("An unexpected error occurred. Please try again later.");
+        }
+
+        console.error("Error adding client:", error);
+        setErrorMessage("Failed to add client. Please try again.");
+        setSuccessMessage("");
+    }
+  };
 
     return(
         <>

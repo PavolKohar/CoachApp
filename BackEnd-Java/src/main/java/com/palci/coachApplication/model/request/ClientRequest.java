@@ -12,21 +12,32 @@ public class ClientRequest {
    private Long ownerId;
 
     @NotBlank(message = "Enter first name please")
+    @Pattern(regexp = "^[\\p{L}]+(?:\\s[\\p{L}]+)*$", message = "Invalid name")
     private String firstName;
+
+
     @NotBlank(message = "Enter last name please")
+    @Pattern(regexp = "^[\\p{L}]+$", message = "Last name must contain only letters")
     private String lastName;
 
-    @Email(message = "Enter valid email please")
+
     @NotBlank(message = "Enter email ")
+    @Email(message = "Enter valid email please")
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", message = "Enter valid email")
     private String email;
 
     @NotBlank(message = "Enter phoneNumber please")
+    @Pattern(regexp = "^\\d+$", message = "Only numbers allowed")
     private String phoneNumber;
 
     @NotBlank(message = "Enter country please")
+    @Pattern(regexp = "^[\\p{L}]+(?:\\s[\\p{L}]+)*$", message = "Invalid country")
     private String country;
+
     @NotBlank(message = "Enter city please")
+    @Pattern(regexp = "^[\\p{L}]+(?:\\s[\\p{L}]+)*$", message = "Invalid city")
     private String city;
+
     @NotBlank(message = "Enter zipCode please")
     private String zipCode;
     @NotBlank(message = "Enter street please")
@@ -51,6 +62,7 @@ public class ClientRequest {
     @NotNull(message = "Enter birth date please")
     private double goalWeight;
 
+    @NotNull(message = "Enter sex please")
     private Sex sex;
 
     @NotBlank(message = "Enter program please")
