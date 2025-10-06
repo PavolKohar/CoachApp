@@ -29,6 +29,7 @@ public class UserEntity implements UserDetails {
 
     private String lastName;
 
+    @Column(nullable = false,unique = true)
     private String userName;
 
     @Column(nullable = false,unique = true)
@@ -45,6 +46,9 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(mappedBy = "owner",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<NoteEntity> ownedNotes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrainingSettingsEntity> trainingSettings = new ArrayList<>();
 
     // TODO Add address and ičo dič for generating bills - IBAN , variable number generate ...
 

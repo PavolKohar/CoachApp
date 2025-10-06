@@ -44,3 +44,20 @@ export const getUserPrograms = async (userId) => {
         throw error;
     }
 };
+
+
+export const addTrainingSettingsToUser = async (userId,data) =>{
+    try {
+        const response = await axios.post(`${BASE_URL}/training-settings/${userId}/add`, data ,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data
+        
+    } catch (error) {
+        console.error("Error adding settings: " , error)
+        throw error;
+        
+    }
+}

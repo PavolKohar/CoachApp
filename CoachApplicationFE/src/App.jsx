@@ -15,6 +15,7 @@ import NotePage from './components/clients/NotePage'
 import UNotePage from './pages/userPages/UNotePage'
 import WeightChart from './components/clients/WeightChart'
 import EditClientPage from './components/clients/EditClientPage'
+import UserEditPage from './pages/userPages/UserEditPage'
 
 
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/all-notes/:userId" element={<UNotePage />} />
         <Route path="/all-notes/:userId/:clientId" element={<NotePage />} />
         <Route path="/clients/edit/:userId/:clientId" element={<EditClientPage/>} />
+        <Route path="/edit-user/:userId" element={<UserEditPage/>} />
         
         
 

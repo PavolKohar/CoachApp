@@ -81,7 +81,7 @@ function UserProfile() {
           </ul>
         </div>
         <div className="card-footer text-center">
-          <button className="btn btn-outline-success btn-sm">Edit Profile</button>
+          <Link to={`/edit-user/${userId}`} className="btn btn-outline-success btn-sm">Edit Profile</Link>
         </div>
       </div>
     </div>
