@@ -6,9 +6,7 @@ import com.palci.coachApplication.mapper.WeightMapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.NoteEntity;
 import com.palci.coachApplication.model.entity.WeightEntity;
-import com.palci.coachApplication.model.request.ClientRequest;
-import com.palci.coachApplication.model.request.NoteRequest;
-import com.palci.coachApplication.model.request.WeightRequest;
+import com.palci.coachApplication.model.request.*;
 import com.palci.coachApplication.model.response.ClientResponse;
 import com.palci.coachApplication.model.response.ClientResponseSmall;
 import com.palci.coachApplication.model.response.NoteResponse;
@@ -115,6 +113,39 @@ public class ClientController {
         notesService.deleteNoteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/edit-contact/{clientId}")
+    public ResponseEntity<?> updateContactClient(@PathVariable Long clientId,
+                                                 @RequestBody ClientContactRequest request){
+        clientService.updateContactClient(clientId,request);
+
+        return ResponseEntity.ok("Contact updated");
+    }
+
+    @PatchMapping("/edit-address/{clientId}")
+    public ResponseEntity<?> updateAddressClient(@PathVariable Long clientId,
+                                                 @RequestBody ClientAddressRequest request){
+        clientService.updateAddressClient(clientId,request);
+
+        return ResponseEntity.ok("Address updated");
+    }
+
+    @PatchMapping("/edit-fitness/{clientId}")
+    public ResponseEntity<?> updateFitnessClient(@PathVariable Long clientId,
+                                                 @Valid @RequestBody ClientFitnessRequest request,
+                                                 BindingResult result){
+        if (result.hasErrors()){
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(err->
+                    errors.put(err.getField(),err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(Map.of("errors",errors));
+        }
+
+
+        clientService.updateFitnessClient(clientId,request);
+
+        return ResponseEntity.ok("Fitness updated");
     }
 
 
