@@ -132,3 +132,18 @@ export const deleteNote = async (id) => {
 }
 
 
+export const updateClientFitness = async (id,data) => {
+    try {
+        await axios.patch(`${BASE_URL}/edit-fitness/${id}`,data ,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        });
+        
+    } catch (error) {
+        console.error("Error editing fitness: ", error)
+        throw error; 
+    }
+}
+
+
