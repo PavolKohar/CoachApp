@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { updateClientFitness } from "../../api/clients";
+import ProgramSelector from "./ProgramSelector";
 
 
-function EditFitnessForm (client) {
+
+function EditFitnessForm ({client,userId}) {
 
     const [formData , setFormData] = useState({
         goalWeight: client.goalWeight,
@@ -57,36 +59,34 @@ function EditFitnessForm (client) {
 
         <form onSubmit={handleSubmit} >
 
-        <div className="col-md-4">
+        <div className="col-md-12 mb-3">
             <label className="form-label">Goal Weight (kg)</label>
-            <input type="number" step="0.01" className="form-control" name="goalWeight" value={client.goalWeight} onChange={handleChange} />
+            <input type="number" step="0.01" className="form-control" name="goalWeight" value={formData.goalWeight} onChange={handleChange} />
             {errors.goalWeight &&(
             <small className="text-danger">{errors.goalWeight}</small>
             )}
         </div>
 
-        <div className='col-md-6'>
+        <div className='col-md-12 mb-3'>
             <label  className="form-label">Activity level</label>
-            <input type="range" name="activityLevel" value={client.activityLevel} className="form-range" min="1" max="5" step="1"  onChange={handleChange} ></input>
+            <input type="range" name="activityLevel" value={formData.activityLevel} className="form-range" min="1" max="5" step="1"  onChange={handleChange} ></input>
             <span>{formData.activityLevel}</span> {/* 👈 Pre zobrazenie hodnoty */}
             {errors.activityLevel &&(
             <small className="text-danger">{errors.activityLevel}</small>
             )}
         </div>
 
-        <div className="col-md-6">
+        <div className="col-md-12">
             <label className="form-label">Program</label>
-            <ProgramSelector handleInputChange={handleChange} newProgram={client.program}/>
+            <ProgramSelector onChange={handleChange} value={formData.program} userId={userId}/>
             {errors.program &&(
             <small className="text-danger">{errors.program}</small>
             )}
         </div>
 
-
-
-
-
-
+        <div className="mt-3">
+            <button type="submit" className="btn btn-success">Save Changes</button>
+        </div>
 
 
         </form>

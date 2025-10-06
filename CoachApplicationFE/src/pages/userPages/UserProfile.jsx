@@ -61,39 +61,52 @@ function UserProfile() {
 
   return (
     <>
-      <div className="container-fluid my-3 d-flex align-items-center">
-        <div
-          className="card bg-dark text-light shadow-lg"
-          style={{ maxWidth: "400px", width: "100%" }}
-        >
-          <div className="card-header bg-success text-white text-center">
-            <h4 className="mb-0">Welcome, {user.username} 👋</h4>
-          </div>
-          <div className="card-body">
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item bg-dark text-light d-flex justify-content-between">
-                <strong>Email:</strong> <span>{user.email}</span>
-              </li>
-              <li className="list-group-item bg-dark text-light d-flex justify-content-between">
-                <strong>Phone:</strong> <span>{user.phoneNumber}</span>
-              </li>
-            </ul>
-          </div>
-          <div className="card-footer text-center">
-            <button className="btn btn-outline-success btn-sm">Edit Profile</button>
-          </div>
-        </div>
 
-        <Link to={`/add-client/${userId}`} className="btn btn-success">
-          Add new client
-        </Link>
-        <Link to={`/add-note/${userId}`} className="btn btn-success">
-          Add note
-        </Link>
-        <Link to={`/all-notes/${userId}`} className="btn btn-success">
-          All notes
-        </Link>
+<div className="container my-4">
+  <div className="row g-3 align-items-stretch">
+    {/* Profile Card */}
+    <div className="col-md-5 col-lg-4">
+      <div className="card bg-dark text-light shadow-lg h-100">
+        <div className="card-header bg-success text-white text-center">
+          <h4 className="mb-0">Welcome, {user.username} 👋</h4>
+        </div>
+        <div className="card-body">
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item bg-dark text-light d-flex justify-content-between">
+              <strong>Email:</strong> <span>{user.email}</span>
+            </li>
+            <li className="list-group-item bg-dark text-light d-flex justify-content-between">
+              <strong>Phone:</strong> <span>{user.phoneNumber}</span>
+            </li>
+          </ul>
+        </div>
+        <div className="card-footer text-center">
+          <button className="btn btn-outline-success btn-sm">Edit Profile</button>
+        </div>
       </div>
+    </div>
+
+    {/* Action Buttons */}
+    <div className="col-md-7 col-lg-8">
+      <div className="card shadow-sm h-100">
+        <div className="card-body d-flex  flex-wrap gap-3 justify-content-center align-items-center">
+          <Link to={`/add-client/${userId}`} className="btn btn-success">
+            ➕ Add Client
+          </Link>
+          <Link to={`/add-note/${userId}`} className="btn btn-primary">
+            📝 Add Note
+          </Link>
+          <Link to={`/all-notes/${userId}`} className="btn btn-warning">
+            📋 All Notes
+          </Link>
+          <Link to={`/training-plan/${userId}`} className="btn btn-info">
+            🏋️‍♂️ Training Plan
+          </Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <div className="container-fluid">
         <hr />

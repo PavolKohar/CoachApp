@@ -41,7 +41,7 @@ function App() {
         <Route path="/clients/add-note/:userId/:clientId" element={<AddNote />} />
         <Route path="/all-notes/:userId" element={<UNotePage />} />
         <Route path="/all-notes/:userId/:clientId" element={<NotePage />} />
-        <Route path="/clients/edit/:clientId" element={<EditClientPage/>} />
+        <Route path="/clients/edit/:userId/:clientId" element={<EditClientPage/>} />
         
         
 

@@ -139,7 +139,7 @@ const handleDeleteWeightRecord = (idToDelete) =>{
                 ⚙️
               </button>
               <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuDark">
-                <li><Link className="dropdown-item" to={`/clients/edit/${client.clientId}`}>Edit client</Link></li>
+                <li><Link className="dropdown-item" to={`/clients/edit/${client.userId}/${client.clientId}`}>Edit client</Link></li>
                 <li><a className="dropdown-item" href="#">Statistic</a></li>
                 <li><a className="dropdown-item" href="#">Create training plan</a></li>
                 <li>

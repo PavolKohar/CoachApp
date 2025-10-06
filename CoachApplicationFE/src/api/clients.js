@@ -147,3 +147,32 @@ export const updateClientFitness = async (id,data) => {
 }
 
 
+export const updateClientAddress = async (id,data) => {
+    try {
+        await axios.patch(`${BASE_URL}/edit-address/${id}`,data,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+        
+    } catch (error) {
+        console.error("Error editing address: ",error)
+        throw error;
+        
+    }
+}
+
+export const updateClientContact =async (id,data) => {
+    try{
+        await axios.patch(`${BASE_URL}/edit-contact/${id}`,data ,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+    }catch(error){
+        console.error("Error editing contact: " , error)
+        throw error;
+    }
+}
+
+

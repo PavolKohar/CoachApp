@@ -215,7 +215,7 @@ function AddClientForm() {
 
       <div className="col-md-6">
         <label className="form-label">Program</label>
-        <ProgramSelector handleInputChange={handleChange} newProgram={formData.program}/>
+        <ProgramSelector onChange={handleChange} value={formData.program} userId={userId}/>
         {errors.program &&(
         <small className="text-danger">{errors.program}</small>
         )}
