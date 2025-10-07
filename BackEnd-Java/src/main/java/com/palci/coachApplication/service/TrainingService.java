@@ -19,4 +19,6 @@ public interface TrainingService {
     List<TrainingResponseFull> getAllTrainingsForUser(UserEntity user);
 
     List<TrainingResponseFull> getNextWeekTrainingsForUser(UserEntity user);
+
+    void markTrainingAsDone(Long trainingId,UserEntity user);
 }

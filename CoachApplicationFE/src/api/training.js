@@ -82,3 +82,21 @@ export const getNextWeekTrainingsForUser = async (userId) =>{
         
     }
 }
+
+export const markTrainingAsDone = async (trainingId) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/${trainingId}/done`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to mark training as done", error);
+    throw error;
+  }
+};

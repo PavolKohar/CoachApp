@@ -1,5 +1,6 @@
 package com.palci.coachApplication.service.implementation;
 
+import com.palci.coachApplication.exception.ResourceNotFoundException;
 import com.palci.coachApplication.mapper.TrainingMapper;
 import com.palci.coachApplication.model.entity.TrainingEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
@@ -94,6 +95,15 @@ public class TrainingServiceImpl implements TrainingService {
 
         return nextWeekTrainingsEntities.stream().map(TrainingMapper::toFullResponse).toList();
 
+    }
+
+    @Override
+    public void markTrainingAsDone(Long trainingId, UserEntity user) {
+        TrainingEntity training = trainingRepository.findById(trainingId).orElseThrow(()-> new ResourceNotFoundException("Training not found"));
+
+        training.setDone(true);
+
+        trainingRepository.save(training);
     }
 
     @Override

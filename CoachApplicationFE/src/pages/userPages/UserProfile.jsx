@@ -10,6 +10,7 @@ import { getTodayTrainingsforUser } from "../../api/training";
 import { getThisWeekTrainingsForUser } from "../../api/training";
 import { getNextWeekTrainingsForUser } from "../../api/training";
 import TrainingList from "../../components/trainings/TrainingList";
+import TrainingTabsSection from "../../components/trainings/TrainingTabSection";
 
 
 function UserProfile() {
@@ -138,11 +139,39 @@ function UserProfile() {
         </div>
       </div>
     </div>
-        <div className="container">
-      <TrainingList trainings={trainings} header={"Today trainings"} />
-      <TrainingList trainings={thisWeekTrainings} header={"This week trainings"} />
-      <TrainingList trainings={nextWeekTrainings} header={"Next week trainings"} />
-    </div>
+
+          <div className="accordion mb-4" id="contactAccordion">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingContact">
+            <button
+              className="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseContact"
+              aria-expanded="false"
+              aria-controls="collapseContact"
+            >
+             Trainings
+            </button>
+          </h2>
+          <div
+            id="collapseContact"
+            className="accordion-collapse collapse"
+            aria-labelledby="headingContact"
+            data-bs-parent="#contactAccordion"
+          >
+            <div className="accordion-body">
+                      <TrainingTabsSection
+          trainings={trainings}
+          thisWeekTrainings={thisWeekTrainings}
+          nextWeekTrainings={nextWeekTrainings}
+        />
+
+
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 

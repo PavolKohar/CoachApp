@@ -15,6 +15,7 @@ import com.palci.coachApplication.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,5 +73,11 @@ public class TrainingController {
         List<TrainingResponseFull> responseFulls = trainingService.getNextWeekTrainingsForUser(user);
 
         return ResponseEntity.ok(responseFulls);
+    }
+
+    @PatchMapping("{trainingId}/done")
+    public ResponseEntity<?> toggleTrainingDone(@PathVariable Long trainingId, @AuthenticationPrincipal UserEntity user){
+        trainingService.markTrainingAsDone(trainingId,user);
+        return ResponseEntity.ok().build();
     }
 }

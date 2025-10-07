@@ -1,4 +1,16 @@
-function TrainingCard({ training }) {
+import { markTrainingAsDone } from "../../api/training";
+
+function TrainingCard({ training, onDone }) {
+
+      const handleDoneClick = async () => {
+    try {
+      await markTrainingAsDone(training.id);
+      onDone(training.id); // Aktualizácia v rodičovi
+    } catch (error) {
+      alert("Failed to mark as done");
+    }
+  };
+
   return (
 <div
   className="card bg-light text-dark mb-3 shadow-sm border-0"
@@ -40,10 +52,7 @@ function TrainingCard({ training }) {
     <div className="mt-4 d-flex justify-content-between">
       <button
         className={`btn btn-sm ${training.done ? 'btn-outline-danger' : 'btn-outline-success'}`}
-        onClick={() => {
-          // TODO: Zavolaj funkciu na zmenu `done` stavu
-          console.log("Toggle done");
-        }}
+        onClick={handleDoneClick}
       >
         {training.done ? "Undo Done" : "Mark Done"}
       </button>
