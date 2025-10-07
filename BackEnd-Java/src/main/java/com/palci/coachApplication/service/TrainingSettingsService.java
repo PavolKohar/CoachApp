@@ -12,6 +12,8 @@ public interface TrainingSettingsService {
     TrainingSettingsEntity addTrainingSettings(UserEntity user, TrainingSettingsRequest request);
 
     List<TrainingSettingsResponse> getAllUsersTrSettings(UserEntity user);
+
+    TrainingSettingsEntity getById(Long id);
     
     //TODO add delete method 
 }

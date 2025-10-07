@@ -1,5 +1,6 @@
 package com.palci.coachApplication.service.implementation;
 
+import com.palci.coachApplication.exception.ResourceNotFoundException;
 import com.palci.coachApplication.mapper.TrainingSettingsMapper;
 import com.palci.coachApplication.model.entity.TrainingSettingsEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
@@ -37,5 +38,10 @@ public class TrainingSettingsServiceImpl implements TrainingSettingsService {
         List<TrainingSettingsEntity> entities = trainingSettingsRepository.findAllByUser(user);
 
         return entities.stream().map(TrainingSettingsMapper::toResponse).toList();
+    }
+
+    @Override
+    public TrainingSettingsEntity getById(Long id) {
+        return trainingSettingsRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Training settings not found"));
     }
 }
