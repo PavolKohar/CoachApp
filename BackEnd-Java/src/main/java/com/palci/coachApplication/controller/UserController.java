@@ -19,6 +19,7 @@ import com.palci.coachApplication.service.TrainingSettingsService;
 import com.palci.coachApplication.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,17 @@ public class UserController {
         List<ClientEntity> clients = clientService.getAllClientsByOwner(user);
         List<ClientResponseSmall> clientResponses = clients.stream().map(ClientMapper::toSmallResponse).toList();
         response.setClients(clientResponses);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{userId}/all-clients")
+    public ResponseEntity<List<ClientResponseSmall>> getAllUserClients(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        List<ClientEntity> clients = clientService.getAllClientsByOwner(user);
+        List<ClientResponseSmall> response = clients.stream().map(
+                ClientMapper::toSmallResponse
+        ).toList();
+
         return ResponseEntity.ok(response);
     }
 

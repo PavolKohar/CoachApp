@@ -102,7 +102,7 @@ function UserProfile() {
           <Link to={`/training-plan/${userId}`} className="btn btn-info">
             🏋️‍♂️ Training Plan
           </Link>
-            <Link to={`/training-plan/${userId}`} className="btn btn-info">
+            <Link to={`/trainings/${userId}/new`} className="btn btn-info">
             🏋️‍♂️ New Training
           </Link>
         </div>
