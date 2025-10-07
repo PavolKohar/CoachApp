@@ -16,10 +16,13 @@ public class TrainingResponseFull {
 
     private LocalDate date;
     private LocalTime time;
+    private LocalTime endTime;
 
     private boolean done;
 
     private String settingsName;
+
+    private int durationInMinutes;
 
     private Long settingsId;
     private Long clientId;

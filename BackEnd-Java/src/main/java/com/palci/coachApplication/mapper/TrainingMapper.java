@@ -20,6 +20,8 @@ public class TrainingMapper {
         if(entity.getSettings() != null){
             response.setSettingsId(entity.getSettings().getId());
             response.setSettingsName(entity.getSettings().getName());
+            response.setDurationInMinutes(entity.getSettings().getDurationInMinutes());
+            response.setEndTime(entity.getTime().plusMinutes(entity.getSettings().getDurationInMinutes()));
         }
 
         if (entity.getClient() != null){

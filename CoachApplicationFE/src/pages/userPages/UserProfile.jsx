@@ -6,6 +6,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ClientList from "../../components/clients/ClientList";
 import { getUserPrograms } from "../../api/users";
+import { getTodayTrainingsforUser } from "../../api/training";
+import { getThisWeekTrainingsForUser } from "../../api/training";
+import { getNextWeekTrainingsForUser } from "../../api/training";
+import TrainingList from "../../components/trainings/TrainingList";
 
 
 function UserProfile() {
@@ -13,6 +17,9 @@ function UserProfile() {
   const [user, setUser] = useState(null);
   const [filter, setFilter] = useState("active");
   const [programs,setPrograms] = useState([]);
+  const [trainings,setTrainings] = useState([]);
+  const [thisWeekTrainings,setThisWeekTrainings] = useState([]);
+  const [nextWeekTrainings,setNextWeekTrainings] = useState([]);
 
 
   useEffect(()=> {
@@ -26,6 +33,29 @@ function UserProfile() {
     };
     fetchPrograms()
   },[userId]);
+
+    useEffect(() => {
+    const fetchTrainings = async () => {
+      try {
+        const data = await getTodayTrainingsforUser(userId);
+        const thisWeekData = await getThisWeekTrainingsForUser(userId);
+        const nextWeekData = await getNextWeekTrainingsForUser(userId);
+        setTrainings(data);
+        setThisWeekTrainings(thisWeekData)
+        setNextWeekTrainings(nextWeekData)
+        console.log(data);
+        console.log(nextWeekData);
+        console.log(thisWeekData);
+        
+      } catch (err) {
+        console.error("Error loading trainings", err);
+      }
+    };
+
+    fetchTrainings();
+  }, [userId]);
+
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,7 +71,7 @@ function UserProfile() {
     fetchUser();
   }, [userId]);
 
-  if (!user) {
+  if (!user ) {
     return (
       <div className="spinner-grow spinner-grow-sm" role="status">
         <span className="visually-hidden">Loading...</span>
@@ -107,6 +137,11 @@ function UserProfile() {
           </Link>
         </div>
       </div>
+    </div>
+        <div className="container">
+      <TrainingList trainings={trainings} header={"Today trainings"} />
+      <TrainingList trainings={thisWeekTrainings} header={"This week trainings"} />
+      <TrainingList trainings={nextWeekTrainings} header={"Next week trainings"} />
     </div>
   </div>
 </div>

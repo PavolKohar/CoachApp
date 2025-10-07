@@ -36,3 +36,49 @@ export const addNewTrainingPlan = async (userId, planData) => {
     }
     
 }
+
+
+export const getTodayTrainingsforUser = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/${userId}/today`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.error("Error getting today trainings: ", error)
+        throw error;
+    }
+    
+}
+
+export const getThisWeekTrainingsForUser = async (userId) => {
+    try {
+                const response = await axios.get(`${BASE_URL}/${userId}/this-week`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        return response.data;   
+    } catch (error) {
+        console.error("Error get this week trainings " , error)
+        throw error;
+    }
+    
+}
+
+export const getNextWeekTrainingsForUser = async (userId) =>{
+    try {
+   const response = await axios.get(`${BASE_URL}/${userId}/next-week`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        return response.data; 
+    } catch (error) {
+        console.error("Error getting next-week trainings ", error)
+        throw error;
+        
+    }
+}

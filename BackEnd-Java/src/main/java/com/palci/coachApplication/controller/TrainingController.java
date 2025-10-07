@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/trainings")
 @RequiredArgsConstructor
@@ -46,5 +48,29 @@ public class TrainingController {
         TrainingPlanResponse response = TrainingPlanMapper.toResponse(entity);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{userId}/today")
+    public ResponseEntity<List<TrainingResponseFull>> getTodayTrainingsForUser(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        List<TrainingResponseFull> responseFulls = trainingService.getTodayTrainingsForUser(user);
+
+        return ResponseEntity.ok(responseFulls);
+    }
+
+    @GetMapping("/{userId}/this-week")
+    public ResponseEntity<List<TrainingResponseFull>> getThisWeekTrainingsForUser(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        List<TrainingResponseFull> responseFulls = trainingService.getThisWeekTrainingsForUser(user);
+
+        return ResponseEntity.ok(responseFulls);
+    }
+
+    @GetMapping("/{userId}/next-week")
+    public ResponseEntity<List<TrainingResponseFull>> getNextWeekTrainingsForUser(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        List<TrainingResponseFull> responseFulls = trainingService.getNextWeekTrainingsForUser(user);
+
+        return ResponseEntity.ok(responseFulls);
     }
 }
