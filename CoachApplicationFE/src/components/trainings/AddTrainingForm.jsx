@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { getAllTrainingSettingsForUser } from "../../api/users";
 import { getClientsForUser } from "../../api/users";
 import { addNewTraining } from "../../api/training";
+import { useNavigate } from "react-router-dom";
 
 
 function AddTrainingForm() {
     const {userId} = useParams();
+    const navigate = useNavigate();
 
     const [clients,setClients] = useState([]);
     const [settingList,setSettingList] = useState([]);
@@ -49,7 +51,8 @@ function AddTrainingForm() {
         try {
             const response = await addNewTraining(userId,formData);
             console.log("Training created" , response);
-            // TODO - Add success message and redirect 
+            // TODO - Add success message
+            navigate(-1)
             
         } catch (error) {
             console.error("Error creating training :" , error);
@@ -58,6 +61,9 @@ function AddTrainingForm() {
     };
 
       return (
+        <div className="container mt-3">
+
+        
     <form onSubmit={handleSubmit}>
       <h3>Create new Training</h3>
       <div className="mb-3">
@@ -106,6 +112,7 @@ function AddTrainingForm() {
 
       <button type="submit" className="btn btn-success">Create Training</button>
     </form>
+    </div>
   );
 
 }
