@@ -61,3 +61,19 @@ export const addTrainingSettingsToUser = async (userId,data) =>{
         
     }
 }
+
+
+export const getAllTrainingSettingsForUser = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/training-settings/${userId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.error("Error fetching settings data")
+        throw error;
+    }
+    
+}

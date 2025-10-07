@@ -2,7 +2,7 @@ import { addTrainingSettingsToUser } from "../../api/users";
 import { useState } from "react";
 
 
-function TrainingSettingsForm ({userId}){
+function TrainingSettingsForm ({userId, onSuccess}){
 
     const [data,setData] = useState({
         price: "",
@@ -37,6 +37,12 @@ function TrainingSettingsForm ({userId}){
                 name: ""
             })
 
+            if(onSuccess){
+                onSuccess()
+            }
+
+
+
             // TODO Set successmessage and error message
 
         } catch (error) {
@@ -56,7 +62,7 @@ function TrainingSettingsForm ({userId}){
 
 <div className="container mt-4">
   <form onSubmit={handleSubmit} className="row g-3">
-    <h3 className="text-primary">Add New Training Settings</h3>
+    <h3 className="text-success">Add New Training Settings</h3>
     <hr />
 
     <div className="col-md-12">
