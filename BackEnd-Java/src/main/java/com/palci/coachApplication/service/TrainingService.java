@@ -20,5 +20,5 @@ public interface TrainingService {
 
     List<TrainingResponseFull> getNextWeekTrainingsForUser(UserEntity user);
 
-    void markTrainingAsDone(Long trainingId,UserEntity user);
+    void toggleDone(Long trainingId,UserEntity user);
 }

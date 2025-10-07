@@ -10,7 +10,7 @@ function TrainingList({ trainings, header }) {
 
   const handleMarkDone = (id) => {
     setLocalTrainings(prev =>
-      prev.map(t => t.id === id ? { ...t, done: true } : t)
+      prev.map(t => t.id === id ? { ...t, done: !t.done } : t)
     );
   };
 

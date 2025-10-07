@@ -98,10 +98,10 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void markTrainingAsDone(Long trainingId, UserEntity user) {
+    public void toggleDone(Long trainingId, UserEntity user) {
         TrainingEntity training = trainingRepository.findById(trainingId).orElseThrow(()-> new ResourceNotFoundException("Training not found"));
 
-        training.setDone(true);
+        training.setDone(!training.isDone());
 
         trainingRepository.save(training);
     }

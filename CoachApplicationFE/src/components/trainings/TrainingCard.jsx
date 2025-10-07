@@ -20,9 +20,13 @@ function TrainingCard({ training, onDone }) {
     {/* Názov tréningu a dátum */}
     <div className="d-flex justify-content-between align-items-center mb-2">
       <h5 className="card-title mb-0">{training.title}</h5>
-      <span className={`badge ${training.done ? 'bg-success' : 'bg-warning text-dark'}`}>
-        {training.date}
-      </span>
+      <span className={`badge ${
+          training.done
+            ? 'bg-success'
+            : (new Date(training.date) < new Date() ? 'bg-danger' : 'bg-warning text-dark')
+        }`}>
+          {training.date}
+        </span>
     </div>
 
     {/* Klient a nastavenie */}

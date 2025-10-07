@@ -77,7 +77,7 @@ public class TrainingController {
 
     @PatchMapping("{trainingId}/done")
     public ResponseEntity<?> toggleTrainingDone(@PathVariable Long trainingId, @AuthenticationPrincipal UserEntity user){
-        trainingService.markTrainingAsDone(trainingId,user);
+        trainingService.toggleDone(trainingId,user);
         return ResponseEntity.ok().build();
     }
 }
