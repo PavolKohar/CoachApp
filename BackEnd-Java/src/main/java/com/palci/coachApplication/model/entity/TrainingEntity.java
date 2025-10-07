@@ -35,7 +35,10 @@ public class TrainingEntity {
     @Column(nullable = false)
     private boolean done;
 
-    // TODO add trainingPlanEntity
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    private TrainingPlanEntity plan;
+
 
     @ManyToOne
     @JoinColumn(name = "client_id")
