@@ -50,6 +50,9 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrainingSettingsEntity> trainingSettings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrainingEntity> trainings = new ArrayList<>();
+
     // TODO Add address and ičo dič for generating bills - IBAN , variable number generate ...
 
     // Methods implements from UserDetails interface

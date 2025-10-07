@@ -67,6 +67,9 @@ public class ClientEntity {
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<NoteEntity> clientNotes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, orphanRemoval = false)
+    private List<TrainingEntity> trainings = new ArrayList<>();
+
     // TODO add some health constrains
 
     @PrePersist
@@ -79,8 +82,7 @@ public class ClientEntity {
         }
     }
 
-
-    //TODO Add trainings and weight history
+    
 
 
 }
