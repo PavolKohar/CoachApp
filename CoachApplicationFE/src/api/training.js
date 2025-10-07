@@ -18,3 +18,21 @@ export const addNewTraining = async (userId, trainingData) => {
     }
     
 }
+
+
+export const addNewTrainingPlan = async (userId, planData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/${userId}/add-plan`, planData , {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        return response.data;
+        
+    } catch (error) {
+        console.error("Error creating plan: , ", error)
+        throw error; 
+        
+    }
+    
+}

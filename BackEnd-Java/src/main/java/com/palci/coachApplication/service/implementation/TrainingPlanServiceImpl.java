@@ -54,7 +54,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
 
 
     @Override
-    public void createTrainingPlan(UserEntity user, TrainingPlanRequest request) {
+    public TrainingPlanEntity createTrainingPlan(UserEntity user, TrainingPlanRequest request) {
         int totalWorkouts = request.getWeeks() * request.getWorkoutsPerWeek();
         LocalDate endDate = request.getStartDate().plusWeeks(request.getWeeks());
         int days = (int) ChronoUnit.DAYS.between(request.getStartDate(),endDate);
@@ -122,9 +122,11 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
             planEntity.setDone(false);
             planEntity.setDoneWorkouts(0);
 
-            trainingPlanRepository.save(planEntity);
+            TrainingPlanEntity savedPlan = trainingPlanRepository.save(planEntity);
             trainingRepository.saveAll(trainings);
 
+
+            return savedPlan;
 
     }
 }

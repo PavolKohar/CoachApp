@@ -99,7 +99,7 @@ function UserProfile() {
           <Link to={`/all-notes/${userId}`} className="btn btn-warning">
             📋 All Notes
           </Link>
-          <Link to={`/training-plan/${userId}`} className="btn btn-info">
+          <Link to={`/trainings/${userId}/plans/new`} className="btn btn-info">
             🏋️‍♂️ Training Plan
           </Link>
             <Link to={`/trainings/${userId}/new`} className="btn btn-info">

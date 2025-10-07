@@ -17,6 +17,7 @@ import WeightChart from './components/clients/WeightChart'
 import EditClientPage from './components/clients/EditClientPage'
 import UserEditPage from './pages/userPages/UserEditPage'
 import AddTrainingForm from './components/trainings/AddTrainingForm'
+import TrainingPlanForm from './components/trainings/TrainingPlanForm'
 
 
 
@@ -46,6 +47,7 @@ function App() {
         <Route path="/clients/edit/:userId/:clientId" element={<EditClientPage/>} />
         <Route path="/edit-user/:userId" element={<UserEditPage/>} />
         <Route path="/trainings/:userId/new" element={<AddTrainingForm/>} />
+        <Route path="/trainings/:userId/plans/new" element={<TrainingPlanForm/>} />
         
         
 
