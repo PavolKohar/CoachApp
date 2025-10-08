@@ -2,6 +2,7 @@ package com.palci.coachApplication.controller;
 
 import com.palci.coachApplication.mapper.TrainingMapper;
 import com.palci.coachApplication.mapper.TrainingPlanMapper;
+import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.TrainingEntity;
 import com.palci.coachApplication.model.entity.TrainingPlanEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
@@ -10,6 +11,7 @@ import com.palci.coachApplication.model.request.TrainingRequest;
 import com.palci.coachApplication.model.request.TrainingUpdateRequest;
 import com.palci.coachApplication.model.response.TrainingPlanResponse;
 import com.palci.coachApplication.model.response.TrainingResponseFull;
+import com.palci.coachApplication.service.ClientService;
 import com.palci.coachApplication.service.TrainingPlanService;
 import com.palci.coachApplication.service.TrainingService;
 import com.palci.coachApplication.service.UserService;
@@ -29,6 +31,7 @@ public class TrainingController {
     private final TrainingService trainingService;
     private final UserService userService;
     private final TrainingPlanService trainingPlanService;
+    private final ClientService clientService;
 
 
     @PostMapping("/{userId}/add")
@@ -104,5 +107,14 @@ public class TrainingController {
         trainingService.deleteTrainingById(trainingId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{clientId}/all")
+    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsForClient(@PathVariable Long clientId){
+        ClientEntity client = clientService.getClientById(clientId);
+        List<TrainingEntity> entities = trainingService.getAllTrainingsByClient(client);
+        List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
+
+        return ResponseEntity.ok(responseFulls);
     }
 }

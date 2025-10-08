@@ -17,7 +17,7 @@ function UserProfile() {
   const [programs,setPrograms] = useState([]);
   const [trainings,setTrainings] = useState([]);
   const navigate = useNavigate();
-  const [selectedTraining, setSelectedTraining] = useState(null)
+  
  
 
 

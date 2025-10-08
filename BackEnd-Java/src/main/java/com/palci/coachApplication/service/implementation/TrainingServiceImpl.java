@@ -2,6 +2,7 @@ package com.palci.coachApplication.service.implementation;
 
 import com.palci.coachApplication.exception.ResourceNotFoundException;
 import com.palci.coachApplication.mapper.TrainingMapper;
+import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.TrainingEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.TrainingRequest;
@@ -133,6 +134,11 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public void deleteTrainingById(Long trainingId) {
         trainingRepository.deleteById(trainingId);
+    }
+
+    @Override
+    public List<TrainingEntity> getAllTrainingsByClient(ClientEntity client) {
+        return trainingRepository.findAllByClientOrderByDateDesc(client);
     }
 
     @Override

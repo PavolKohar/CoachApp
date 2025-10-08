@@ -143,3 +143,18 @@ export const deleteTraining = async (id) => {
     }
     
 }
+
+export const getClientTrainings = async (clientId) =>{
+    try {
+        const response = await axios.get(`${BASE_URL}/${clientId}/all`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        });
+        return response.data; 
+    } catch (error) {
+        console.error("Error getting client trainings", error);
+        throw error;
+        
+    }
+}

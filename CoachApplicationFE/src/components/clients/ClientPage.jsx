@@ -6,6 +6,9 @@ import WeightList from "./WeightList";
 import { Link } from "react-router-dom";
 import WeightChart from "./WeightChart";
 import { toggleActive} from "../../api/clients";
+import { getClientTrainings } from "../../api/training";
+import TrainingListSmall from "../trainings/TrainingListSmall";
+import { useNavigate } from "react-router-dom";
 
 function ClientPage(){
     const { clientId } = useParams();
@@ -15,12 +18,16 @@ function ClientPage(){
     const [errorMessage, setErrorMessage] = useState("");
     const [weightData, setWeightData] = useState([]);
     const [showChart, setShowChart] = useState(false);
+    const [trainings,setTrainings] = useState([]);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchClient = async () => {
             try {
                 const data = await getClientById(clientId);
+                const trainingData = await getClientTrainings(clientId);
+                setTrainings(trainingData);
                 setClient(data);
                 const weightData = data.weightResponses.map(w=> ({
                       date: w.date,
@@ -67,7 +74,7 @@ function ClientPage(){
         setNewWeight(value);    
     };
 
-const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     await updateCurrentWeight(clientId, newWeight); // váha sa aktualizuje na backende
@@ -95,16 +102,32 @@ const handleSubmit = async (e) => {
     }, 3000); // správa zmizne po 3 sekundách
     
   }
-};
+    };
 
-const handleDeleteWeightRecord = (idToDelete) =>{
+    const handleDeleteWeightRecord = (idToDelete) =>{
   const updatedWeightRecords = client.weightResponses.filter(w=> w.id !== idToDelete);
   const updatedClient = {...client, weightResponses: updatedWeightRecords};
   setClient(updatedClient)
 
   const updatedChartData = weightData.filter(w=> w.id !== idToDelete);
   setWeightData(updatedChartData)
-}
+    }
+
+    const handleDoneButton = () => {
+    const fetchTrainingsAct = async () => {
+      try {
+        const updateTrainings = await getClientTrainings(clientId);
+        setTrainings(updateTrainings);
+      }catch(error){
+        console.error("Error in user page with updating trainings" , error)
+      }
+    }
+    fetchTrainingsAct();
+  }
+
+    const handleClickTraining = (id) =>{
+    navigate(`/training/${client.userId}/${id}`)
+  }
 
 
 
@@ -141,7 +164,7 @@ const handleDeleteWeightRecord = (idToDelete) =>{
               <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuDark">
                 <li><Link className="dropdown-item" to={`/clients/edit/${client.userId}/${client.clientId}`}>Edit client</Link></li>
                 <li><a className="dropdown-item" href="#">Statistic</a></li>
-                <li><a className="dropdown-item" href="#">Create training plan</a></li>
+                <li><Link className="dropdown-item" to={`/trainings/${client.userId}/plans/new`}>Create training plan</Link></li>
                 <li>
                       <button
                         className={`dropdown-item ${client.active ? 'text-danger' : 'text-success'}`}
@@ -228,7 +251,8 @@ const handleDeleteWeightRecord = (idToDelete) =>{
     </div>
   </div>
   <hr />
-  <h2>Upcoming trainings</h2>
+  <h5>Upcoming trainings</h5>
+  <TrainingListSmall trainings={trainings} onDoneClick={handleDoneButton} onTrainingClick={handleClickTraining}/>
   <hr />
   <div className="d-flex justify-content-between">
   <h5 className="mb-3">📈 Weight History</h5>
