@@ -24,4 +24,6 @@ public interface ClientService {
     ClientEntity updateAddressClient(Long clientId, ClientAddressRequest request);
 
     ClientEntity updateFitnessClient(Long clientId, ClientFitnessRequest request);
+
+    void deleteClientById(Long clientId);
 }

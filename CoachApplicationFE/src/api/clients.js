@@ -131,6 +131,20 @@ export const deleteNote = async (id) => {
     
 }
 
+export const deleteClientById = async (id) => {
+    try{
+        await axios.delete(`${BASE_URL}/remove/${id}`,{
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+    }catch(error){
+        console.error("Error deleting client")
+        throw error;
+    }
+    
+}
+
 
 export const updateClientFitness = async (id,data) => {
     try {

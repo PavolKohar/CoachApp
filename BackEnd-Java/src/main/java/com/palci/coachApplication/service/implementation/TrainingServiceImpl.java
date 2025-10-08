@@ -5,6 +5,7 @@ import com.palci.coachApplication.mapper.TrainingMapper;
 import com.palci.coachApplication.model.entity.TrainingEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.TrainingRequest;
+import com.palci.coachApplication.model.request.TrainingUpdateRequest;
 import com.palci.coachApplication.model.response.TrainingResponseFull;
 import com.palci.coachApplication.repository.TrainingRepository;
 import com.palci.coachApplication.service.ClientService;
@@ -104,6 +105,34 @@ public class TrainingServiceImpl implements TrainingService {
         training.setDone(!training.isDone());
 
         trainingRepository.save(training);
+    }
+
+    @Override
+    public TrainingEntity getById(UserEntity user, Long trainingId) {
+        // TODO - Add exception if training does not belong to user
+
+        return trainingRepository.findById(trainingId).orElseThrow(()->new ResourceNotFoundException("Training not found"));
+    }
+
+    @Override
+    public void updateTraining(Long trainingId, TrainingUpdateRequest request) {
+        TrainingEntity entity = trainingRepository.findById(trainingId).orElseThrow(()-> new ResourceNotFoundException("Training not found"));
+
+        entity.setTitle(request.getTitle());
+        entity.setDescription(request.getDescription());
+        entity.setDate(request.getDate());
+        entity.setTime(request.getTime());
+        entity.setDone(entity.isDone());
+
+        entity.setSettings(trainingSettingsService.getById(request.getSettingsId()));
+
+        trainingRepository.save(entity);
+
+    }
+
+    @Override
+    public void deleteTrainingById(Long trainingId) {
+        trainingRepository.deleteById(trainingId);
     }
 
     @Override

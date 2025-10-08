@@ -5,6 +5,7 @@ import EditFitnessForm from "./EditFitnessForm";
 import EditAddressForm from "./EditAddressForm";
 import EditContactForm from "./EditContactForm";
 import { useNavigate } from "react-router-dom";
+import { deleteClientById } from "../../api/clients";
 
 function EditClientPage() {
   const { userId, clientId } = useParams();
@@ -25,6 +26,16 @@ function EditClientPage() {
     fetchClient();
   }, [clientId]);
 
+  const handleDeleteClient = async () =>{
+    if(window.confirm("Are you sure to delete this client ?"))
+    try{
+        await deleteClientById(clientId);
+    }catch(error){
+      console.error("Error deleting client, ", error);
+      alert("Error deleting client")
+    }
+  }
+
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center">
@@ -44,7 +55,12 @@ function EditClientPage() {
             <li><a className="dropdown-item" href="#">Statistic</a></li>
             <li><a className="dropdown-item" href="#">Create training plan</a></li>
             <li><a className="dropdown-item" href="#">Deactivate</a></li>
-            <li><a className="dropdown-item" href="#">Remove Client</a></li>
+            <button
+                  className="dropdown-item"
+                  onClick={handleDeleteClient}
+            >
+                        Remove Client
+            </button>
           </ul>
         </div>
       </div>

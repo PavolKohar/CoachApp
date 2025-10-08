@@ -22,6 +22,7 @@ public class TrainingMapper {
             response.setSettingsName(entity.getSettings().getName());
             response.setDurationInMinutes(entity.getSettings().getDurationInMinutes());
             response.setEndTime(entity.getTime().plusMinutes(entity.getSettings().getDurationInMinutes()));
+            response.setPrice(entity.getSettings().getPrice());
         }
 
         if (entity.getClient() != null){

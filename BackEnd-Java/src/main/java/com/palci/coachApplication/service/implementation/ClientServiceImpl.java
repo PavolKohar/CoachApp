@@ -88,6 +88,11 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.save(client);
     }
 
+    @Override
+    public void deleteClientById(Long clientId) {
+        clientRepository.deleteById(clientId);
+    }
+
 
     // helper
 

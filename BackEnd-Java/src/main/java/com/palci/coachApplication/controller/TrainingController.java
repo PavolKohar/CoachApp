@@ -7,6 +7,7 @@ import com.palci.coachApplication.model.entity.TrainingPlanEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.TrainingPlanRequest;
 import com.palci.coachApplication.model.request.TrainingRequest;
+import com.palci.coachApplication.model.request.TrainingUpdateRequest;
 import com.palci.coachApplication.model.response.TrainingPlanResponse;
 import com.palci.coachApplication.model.response.TrainingResponseFull;
 import com.palci.coachApplication.service.TrainingPlanService;
@@ -79,5 +80,29 @@ public class TrainingController {
     public ResponseEntity<?> toggleTrainingDone(@PathVariable Long trainingId, @AuthenticationPrincipal UserEntity user){
         trainingService.toggleDone(trainingId,user);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{trainingId}")
+    public ResponseEntity<TrainingResponseFull> getTrainingById(@PathVariable Long trainingId, @AuthenticationPrincipal UserEntity user){
+        TrainingEntity entity = trainingService.getById(user,trainingId);
+        TrainingResponseFull responseFull = TrainingMapper.toFullResponse(entity);
+
+
+        return ResponseEntity.ok(responseFull);
+    }
+
+    @PatchMapping("/update/{trainingId}")
+    public ResponseEntity<?> updateTraining(@PathVariable Long trainingId, @RequestBody TrainingUpdateRequest request){
+
+        trainingService.updateTraining(trainingId,request);
+
+        return ResponseEntity.ok("Training updated");
+    }
+
+    @DeleteMapping("/delete/{trainingId}")
+    public ResponseEntity<Void> deleteTraining(@PathVariable Long trainingId){
+        trainingService.deleteTrainingById(trainingId);
+
+        return ResponseEntity.noContent().build();
     }
 }

@@ -78,7 +78,7 @@ function UserProfile() {
   }, [userId]);
 
   const handleClickTraining = (id) =>{
-    navigate(`/training/${id}`)
+    navigate(`/training/${userId}/${id}`)
   }
 
   if (!user) {

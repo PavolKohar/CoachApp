@@ -18,6 +18,8 @@ public class TrainingResponseFull {
     private LocalTime time;
     private LocalTime endTime;
 
+    private double price;
+
     private boolean done;
 
     private String settingsName;

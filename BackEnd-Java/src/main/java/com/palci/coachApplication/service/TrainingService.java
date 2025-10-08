@@ -3,6 +3,7 @@ package com.palci.coachApplication.service;
 import com.palci.coachApplication.model.entity.TrainingEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.TrainingRequest;
+import com.palci.coachApplication.model.request.TrainingUpdateRequest;
 import com.palci.coachApplication.model.response.TrainingResponseFull;
 import com.palci.coachApplication.model.response.TrainingResponseSmall;
 
@@ -21,4 +22,10 @@ public interface TrainingService {
     List<TrainingResponseFull> getNextWeekTrainingsForUser(UserEntity user);
 
     void toggleDone(Long trainingId,UserEntity user);
+
+    TrainingEntity getById(UserEntity user, Long trainingId);
+
+    void updateTraining(Long trainingId, TrainingUpdateRequest request);
+
+    void deleteTrainingById(Long trainingId);
 }

@@ -148,5 +148,12 @@ public class ClientController {
         return ResponseEntity.ok("Fitness updated");
     }
 
+    @DeleteMapping("/remove/{clientId}")
+    public ResponseEntity<Void> removeClient(@PathVariable Long clientId){
+        clientService.deleteClientById(clientId);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

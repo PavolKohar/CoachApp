@@ -53,6 +53,20 @@ export const getTodayTrainingsforUser = async (userId) => {
     
 }
 
+export const getTrainingById = async (trainingId) =>{
+    try {
+        const response = await axios.get(`${BASE_URL}/${trainingId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        return response.data; 
+    } catch (error) {
+        console.error("Error getting training")
+        throw error;   
+    }
+}
+
 export const getThisWeekTrainingsForUser = async (userId) => {
     try {
                 const response = await axios.get(`${BASE_URL}/${userId}/this-week`, {
@@ -100,3 +114,32 @@ export const toggleTrainingDone = async (trainingId) => {
     throw error;
   }
 };
+
+
+export const updateTraining = async (id,data) => {
+    try{
+        await axios.patch(`${BASE_URL}/update/${id}`,data,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+    }catch(error){
+        console.error("Error editing training", error)
+        throw error;
+    }
+    
+}
+
+export const deleteTraining = async (id) => {
+    try {
+        await axios.delete(`${BASE_URL}/delete/${id}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        });
+    } catch (error) {
+        console.error("Error deleting training " ,error)
+        throw error;
+    }
+    
+}
