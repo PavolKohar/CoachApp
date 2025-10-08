@@ -16,6 +16,8 @@ public class TrainingPlanEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     @Column(nullable = false)
     private LocalDate startDate;
 

@@ -9,6 +9,8 @@ public class TrainingPlanResponse {
 
     private Long id;
 
+    private String title;
+
     private LocalDate startDate;
     private LocalDate endDate;
 

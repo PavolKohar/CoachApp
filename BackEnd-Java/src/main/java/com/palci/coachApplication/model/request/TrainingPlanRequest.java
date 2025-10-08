@@ -14,6 +14,8 @@ public class TrainingPlanRequest {
 
     private Long clientId;
 
+    private String title;
+
     private int weeks;
     private int workoutsPerWeek;
 

@@ -113,6 +113,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
 
         }
 
+            planEntity.setTitle(request.getTitle());
             planEntity.setTrainings(trainings);
             planEntity.setClient(clientService.getClientById(request.getClientId()));
             planEntity.setUser(user);

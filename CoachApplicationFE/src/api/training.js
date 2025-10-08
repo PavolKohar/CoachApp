@@ -83,7 +83,7 @@ export const getNextWeekTrainingsForUser = async (userId) =>{
     }
 }
 
-export const markTrainingAsDone = async (trainingId) => {
+export const toggleTrainingDone = async (trainingId) => {
   try {
     const response = await axios.patch(
       `${BASE_URL}/${trainingId}/done`,

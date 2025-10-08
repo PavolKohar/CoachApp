@@ -2,15 +2,12 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getUserById } from "../../api/auth";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ClientList from "../../components/clients/ClientList";
 import { getUserPrograms } from "../../api/users";
 import { getTodayTrainingsforUser } from "../../api/training";
-import { getThisWeekTrainingsForUser } from "../../api/training";
-import { getNextWeekTrainingsForUser } from "../../api/training";
-import TrainingList from "../../components/trainings/TrainingList";
-import TrainingTabsSection from "../../components/trainings/TrainingTabSection";
+import TrainingListSmall from "../../components/trainings/TrainingListSmall";
 
 
 function UserProfile() {
@@ -19,8 +16,9 @@ function UserProfile() {
   const [filter, setFilter] = useState("active");
   const [programs,setPrograms] = useState([]);
   const [trainings,setTrainings] = useState([]);
-  const [thisWeekTrainings,setThisWeekTrainings] = useState([]);
-  const [nextWeekTrainings,setNextWeekTrainings] = useState([]);
+  const navigate = useNavigate();
+  const [selectedTraining, setSelectedTraining] = useState(null)
+ 
 
 
   useEffect(()=> {
@@ -39,14 +37,9 @@ function UserProfile() {
     const fetchTrainings = async () => {
       try {
         const data = await getTodayTrainingsforUser(userId);
-        const thisWeekData = await getThisWeekTrainingsForUser(userId);
-        const nextWeekData = await getNextWeekTrainingsForUser(userId);
         setTrainings(data);
-        setThisWeekTrainings(thisWeekData)
-        setNextWeekTrainings(nextWeekData)
         console.log(data);
-        console.log(nextWeekData);
-        console.log(thisWeekData);
+        
         
       } catch (err) {
         console.error("Error loading trainings", err);
@@ -55,6 +48,18 @@ function UserProfile() {
 
     fetchTrainings();
   }, [userId]);
+
+  const handleDoneButton = () => {
+    const fetchTrainingsAct = async () => {
+      try {
+        const updateTrainings = await getTodayTrainingsforUser(userId);
+        setTrainings(updateTrainings);
+      }catch(error){
+        console.error("Error in user page with updating trainings" , error)
+      }
+    }
+    fetchTrainingsAct();
+  }
 
 
 
@@ -72,7 +77,11 @@ function UserProfile() {
     fetchUser();
   }, [userId]);
 
-  if (!user ) {
+  const handleClickTraining = (id) =>{
+    navigate(`/training/${id}`)
+  }
+
+  if (!user) {
     return (
       <div className="spinner-grow spinner-grow-sm" role="status">
         <span className="visually-hidden">Loading...</span>
@@ -139,44 +148,18 @@ function UserProfile() {
         </div>
       </div>
     </div>
-
-          <div className="accordion mb-4" id="contactAccordion">
-        <div className="accordion-item">
-          <h2 className="accordion-header" id="headingContact">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseContact"
-              aria-expanded="false"
-              aria-controls="collapseContact"
-            >
-             Trainings
-            </button>
-          </h2>
-          <div
-            id="collapseContact"
-            className="accordion-collapse collapse"
-            aria-labelledby="headingContact"
-            data-bs-parent="#contactAccordion"
-          >
-            <div className="accordion-body">
-                      <TrainingTabsSection
-          trainings={trainings}
-          thisWeekTrainings={thisWeekTrainings}
-          nextWeekTrainings={nextWeekTrainings}
-        />
-
-
-            </div>
-          </div>
+            <div className="d-flex justify-content-between align-items-center mb-1">
+            <h3 className="mb-0">Today trainings</h3>
+            <Link className="btn btn-success" to={`/trainings/${userId}/all`}>
+            All trainings
+            </Link>
         </div>
-      </div>
+    <TrainingListSmall trainings={trainings} onDoneClick={handleDoneButton} onTrainingClick={handleClickTraining}/>
   </div>
 </div>
 
       <div className="container-fluid">
-        <hr />
+        <hr className="mt-0"/>
         <h2 className="text-center text-success mb-4">Your Clients</h2>
         <ul className="nav nav-tabs mb-4">
           <li className="nav-item">
