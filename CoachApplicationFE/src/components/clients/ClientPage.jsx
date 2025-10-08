@@ -9,6 +9,9 @@ import { toggleActive} from "../../api/clients";
 import { getClientTrainings } from "../../api/training";
 import TrainingListSmall from "../trainings/TrainingListSmall";
 import { useNavigate } from "react-router-dom";
+import { getTrainingPlansForClient } from "../../api/training";
+import TrainingPlanList from "../trainings/TrainingPlanList";
+import { getUndoneClientTrainings } from "../../api/training";
 
 function ClientPage(){
     const { clientId } = useParams();
@@ -19,6 +22,7 @@ function ClientPage(){
     const [weightData, setWeightData] = useState([]);
     const [showChart, setShowChart] = useState(false);
     const [trainings,setTrainings] = useState([]);
+    const [plans,setPlans] = useState([]);
     const navigate = useNavigate();
 
 
@@ -26,7 +30,7 @@ function ClientPage(){
         const fetchClient = async () => {
             try {
                 const data = await getClientById(clientId);
-                const trainingData = await getClientTrainings(clientId);
+                const trainingData = await getUndoneClientTrainings(clientId);
                 setTrainings(trainingData);
                 setClient(data);
                 const weightData = data.weightResponses.map(w=> ({
@@ -113,11 +117,26 @@ function ClientPage(){
   setWeightData(updatedChartData)
     }
 
+    useEffect(() => {
+      const fetchPlans = async () => {
+        try{
+        const planData = await getTrainingPlansForClient(clientId);
+        setPlans(planData);
+        }catch (error){
+          console.error("Error fetching plans", error)
+        }
+
+      }
+      fetchPlans();
+    },[clientId])
+
     const handleDoneButton = () => {
     const fetchTrainingsAct = async () => {
       try {
-        const updateTrainings = await getClientTrainings(clientId);
+        const updateTrainings = await getUndoneClientTrainings(clientId);
         setTrainings(updateTrainings);
+        const updatedPlans = await getTrainingPlansForClient(clientId);
+        setPlans(updatedPlans)
       }catch(error){
         console.error("Error in user page with updating trainings" , error)
       }
@@ -271,6 +290,9 @@ function ClientPage(){
           ) : (
             <WeightList weightRecords={client.weightResponses} onDelete={handleDeleteWeightRecord} />
           )}
+          <hr />
+
+      <TrainingPlanList plans={plans} userId={client.userId} />
 </div>
     );
 }

@@ -9,6 +9,7 @@ public class TrainingPlanMapper {
         TrainingPlanResponse response = new TrainingPlanResponse();
 
         response.setId(entity.getId());
+        response.setTitle(entity.getTitle());
         response.setStartDate(entity.getStartDate());
         response.setEndDate(entity.getEndDate());
         response.setDone(entity.isDone());

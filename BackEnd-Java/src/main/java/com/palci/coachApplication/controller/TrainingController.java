@@ -117,4 +117,49 @@ public class TrainingController {
 
         return ResponseEntity.ok(responseFulls);
     }
+
+    @GetMapping("{clientId}/undone")
+    public ResponseEntity<List<TrainingResponseFull>> getUndoneTrainingsForClient(@PathVariable Long clientId){
+        ClientEntity client = clientService.getClientById(clientId);
+        List<TrainingEntity> entities = trainingService.getUndoneTrainingsByClient(client);
+        List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
+
+        return ResponseEntity.ok(responseFulls);
+    }
+
+    @GetMapping("/plans-all/{userId}")
+    public ResponseEntity<List<TrainingPlanResponse>> getAllTrainingPlansForUser(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        List<TrainingPlanEntity> plans = trainingPlanService.getAllTrainingPlansForUser(user);
+        List<TrainingPlanResponse> responses = plans.stream().map(TrainingPlanMapper::toResponse).toList();
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/plans-client/{clientId}")
+    public ResponseEntity<List<TrainingPlanResponse>> getAllTrainingPlansForClient(@PathVariable Long clientId){
+        ClientEntity client = clientService.getClientById(clientId);
+        List<TrainingPlanEntity> planEntities = trainingPlanService.getAllTrainingPlansForClient(client);
+        List<TrainingPlanResponse> responses = planEntities.stream().map(TrainingPlanMapper::toResponse).toList();
+
+        return ResponseEntity.ok(responses);
+    }
+
+
+    @GetMapping("/plan/{planId}")
+    public ResponseEntity<TrainingPlanResponse> getTrainingPlanById(@PathVariable Long planId){
+        TrainingPlanEntity entity = trainingPlanService.getTrainingPlatById(planId);
+        TrainingPlanResponse response = TrainingPlanMapper.toResponse(entity);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/trainings-plan/{planId}")
+    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsByTrainingPlan(@PathVariable Long planId){
+        TrainingPlanEntity plan = trainingPlanService.getTrainingPlatById(planId);
+        List<TrainingEntity> entities = trainingService.getAllTrainingsByTrainingPlan(plan);
+        List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
+
+        return ResponseEntity.ok(responseFulls);
+    }
 }

@@ -8,6 +8,8 @@ import ClientList from "../../components/clients/ClientList";
 import { getUserPrograms } from "../../api/users";
 import { getTodayTrainingsforUser } from "../../api/training";
 import TrainingListSmall from "../../components/trainings/TrainingListSmall";
+import TrainingPlanList from "../../components/trainings/TrainingPlanList";
+import { getTrainingPlansForUser } from "../../api/training";
 
 
 function UserProfile() {
@@ -16,6 +18,7 @@ function UserProfile() {
   const [filter, setFilter] = useState("active");
   const [programs,setPrograms] = useState([]);
   const [trainings,setTrainings] = useState([]);
+  const [plans,setPlans] = useState([]);
   const navigate = useNavigate();
   
  
@@ -54,6 +57,8 @@ function UserProfile() {
       try {
         const updateTrainings = await getTodayTrainingsforUser(userId);
         setTrainings(updateTrainings);
+        const updatedPlans = await getTrainingPlansForUser(userId)
+        setPlans(updatedPlans);
       }catch(error){
         console.error("Error in user page with updating trainings" , error)
       }
@@ -80,6 +85,20 @@ function UserProfile() {
   const handleClickTraining = (id) =>{
     navigate(`/training/${userId}/${id}`)
   }
+
+  useEffect(()=>{
+    const fetchPlans = async () =>{
+      try {
+        const data = await getTrainingPlansForUser(userId);
+        setPlans(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error getting plans" , error);
+      }
+
+    }
+    fetchPlans();
+  },[userId])
 
   if (!user) {
     return (
@@ -220,6 +239,9 @@ function UserProfile() {
         </ul>
 
         <ClientList clients={filteredClients} />
+        <hr className="mt-1" />
+        <TrainingPlanList plans={plans} userId={userId} />
+
       </div>
     </>
   );

@@ -1,5 +1,7 @@
 package com.palci.coachApplication.service.implementation;
 
+import com.palci.coachApplication.exception.ResourceNotFoundException;
+import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.TrainingEntity;
 import com.palci.coachApplication.model.entity.TrainingPlanEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
@@ -129,5 +131,20 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
 
             return savedPlan;
 
+    }
+
+    @Override
+    public List<TrainingPlanEntity> getAllTrainingPlansForUser(UserEntity user) {
+        return trainingPlanRepository.findAllByUserOrderByStartDateDesc(user);
+    }
+
+    @Override
+    public List<TrainingPlanEntity> getAllTrainingPlansForClient(ClientEntity client) {
+        return trainingPlanRepository.findAllByClientOrderByStartDateDesc(client);
+    }
+
+    @Override
+    public TrainingPlanEntity getTrainingPlatById(Long planId) {
+        return trainingPlanRepository.findById(planId).orElseThrow(()->new ResourceNotFoundException("Fail to find plan"));
     }
 }

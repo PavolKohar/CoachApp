@@ -4,10 +4,12 @@ import com.palci.coachApplication.exception.ResourceNotFoundException;
 import com.palci.coachApplication.mapper.TrainingMapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.TrainingEntity;
+import com.palci.coachApplication.model.entity.TrainingPlanEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.TrainingRequest;
 import com.palci.coachApplication.model.request.TrainingUpdateRequest;
 import com.palci.coachApplication.model.response.TrainingResponseFull;
+import com.palci.coachApplication.repository.TrainingPlanRepository;
 import com.palci.coachApplication.repository.TrainingRepository;
 import com.palci.coachApplication.service.ClientService;
 import com.palci.coachApplication.service.TrainingService;
@@ -28,6 +30,7 @@ public class TrainingServiceImpl implements TrainingService {
     private final TrainingRepository trainingRepository;
     private final ClientService clientService;
     private final TrainingSettingsService trainingSettingsService;
+    private final TrainingPlanRepository trainingPlanRepository;
 
 
     @Override
@@ -104,6 +107,11 @@ public class TrainingServiceImpl implements TrainingService {
         TrainingEntity training = trainingRepository.findById(trainingId).orElseThrow(()-> new ResourceNotFoundException("Training not found"));
 
         training.setDone(!training.isDone());
+        if (training.getPlan() != null){
+            TrainingPlanEntity planEntity = training.getPlan();
+            planEntity.updateProgress();
+            trainingPlanRepository.save(planEntity);
+        }
 
         trainingRepository.save(training);
     }
@@ -125,9 +133,18 @@ public class TrainingServiceImpl implements TrainingService {
         entity.setTime(request.getTime());
         entity.setDone(entity.isDone());
 
+
+
         entity.setSettings(trainingSettingsService.getById(request.getSettingsId()));
 
+        if(entity.getPlan() != null){
+            TrainingPlanEntity planEntity = entity.getPlan();
+            planEntity.updateProgress();
+            trainingPlanRepository.save(planEntity);
+        }
+
         trainingRepository.save(entity);
+
 
     }
 
@@ -139,6 +156,16 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public List<TrainingEntity> getAllTrainingsByClient(ClientEntity client) {
         return trainingRepository.findAllByClientOrderByDateDesc(client);
+    }
+
+    @Override
+    public List<TrainingEntity> getUndoneTrainingsByClient(ClientEntity client) {
+        return trainingRepository.findAllByClientOrderByDateDesc(client).stream().filter(e->!e.isDone()).toList();
+    }
+
+    @Override
+    public List<TrainingEntity> getAllTrainingsByTrainingPlan(TrainingPlanEntity plan) {
+        return trainingRepository.findAllByPlan(plan);
     }
 
     @Override

@@ -19,6 +19,7 @@ import UserEditPage from './pages/userPages/UserEditPage'
 import AddTrainingForm from './components/trainings/AddTrainingForm'
 import TrainingPlanForm from './components/trainings/TrainingPlanForm'
 import TrainingPage from './components/trainings/TrainingPage'
+import TrainingPlanPage from './components/trainings/TrainingPlanPage'
 
 
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/trainings/:userId/new" element={<AddTrainingForm/>} />
         <Route path="/trainings/:userId/plans/new" element={<TrainingPlanForm/>} />
         <Route path="/training/:userId/:trainingId" element={<TrainingPage/>} />
+        <Route path="/plan/:userId/:planId" element={<TrainingPlanPage/>} />
         
         
 

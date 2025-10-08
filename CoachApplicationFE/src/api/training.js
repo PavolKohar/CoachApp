@@ -158,3 +158,76 @@ export const getClientTrainings = async (clientId) =>{
         
     }
 }
+
+export const getUndoneClientTrainings = async (clientId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/${clientId}/undone`,{
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.error("Error getting trainings" , error)
+        throw error;  
+    }
+    
+}
+
+export const getTrainingPlansForUser = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/plans-all/${userId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.error("Error getting plans for user " ,error)
+        throw error; 
+    }
+    
+}
+
+export const getTrainingPlansForClient = async (clientId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/plans-client/${clientId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.error("Error getting plans for client " ,error)
+        throw error; 
+    } 
+}
+
+export const getTrainingsByTrainingPlan = async (planId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/trainings-plan/${planId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.error("Error getting trainings" , error);
+        throw error; 
+    }
+    
+}
+
+export const getTrainingPlanbyId = async (planId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/plan/${planId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.error("Error getting plan" ,error)
+        throw error; 
+    } 
+}

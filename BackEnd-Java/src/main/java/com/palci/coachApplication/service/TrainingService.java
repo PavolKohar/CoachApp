@@ -2,6 +2,7 @@ package com.palci.coachApplication.service;
 
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.TrainingEntity;
+import com.palci.coachApplication.model.entity.TrainingPlanEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.TrainingRequest;
 import com.palci.coachApplication.model.request.TrainingUpdateRequest;
@@ -31,4 +32,8 @@ public interface TrainingService {
     void deleteTrainingById(Long trainingId);
 
     List<TrainingEntity> getAllTrainingsByClient(ClientEntity client);
+
+    List<TrainingEntity> getUndoneTrainingsByClient(ClientEntity client);
+
+    List<TrainingEntity> getAllTrainingsByTrainingPlan(TrainingPlanEntity plan);
 }

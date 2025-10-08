@@ -2,6 +2,7 @@ package com.palci.coachApplication.repository;
 
 import com.palci.coachApplication.model.entity.ClientEntity;
 import com.palci.coachApplication.model.entity.TrainingEntity;
+import com.palci.coachApplication.model.entity.TrainingPlanEntity;
 import com.palci.coachApplication.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface TrainingRepository extends JpaRepository<TrainingEntity,Long> {
     List<TrainingEntity> findAllByUserOrderByDateAsc(UserEntity user);
 
     List<TrainingEntity> findAllByClientOrderByDateDesc(ClientEntity client);
+
+    List<TrainingEntity> findAllByPlan(TrainingPlanEntity plan);
 }

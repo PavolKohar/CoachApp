@@ -14,6 +14,7 @@ function TrainingPlanForm({ onSubmit }) {
   const [formData, setFormData] = useState({
     clientId: "",
     weeks: 4,
+    title: "",
     workoutsPerWeek: 3,
     startDate: "",
     preferredTime: "",
