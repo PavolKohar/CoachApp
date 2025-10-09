@@ -98,7 +98,6 @@ public class TrainingController {
         TrainingEntity entity = trainingService.getById(user,trainingId);
         TrainingResponseFull responseFull = TrainingMapper.toFullResponse(entity);
 
-
         return ResponseEntity.ok(responseFull);
     }
 
