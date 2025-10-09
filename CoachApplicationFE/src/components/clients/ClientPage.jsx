@@ -44,6 +44,9 @@ function ClientPage(){
                 }
                 console.log("Fetched client data:", data);
             } catch (error) {
+                if(error.response?.status === 403){
+                  navigate("/forbidden")
+                }
                 console.error("Error fetching client data:", error);
             }
         };

@@ -2,6 +2,7 @@ package com.palci.coachApplication.service.implementation;
 
 import com.palci.coachApplication.mapper.WeightMapper;
 import com.palci.coachApplication.model.entity.ClientEntity;
+import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.entity.WeightEntity;
 import com.palci.coachApplication.model.request.WeightRequest;
 import com.palci.coachApplication.model.response.WeightResponse;
@@ -26,8 +27,8 @@ public class WeightServiceImpl implements WeightService {
 
 
     @Override
-    public WeightEntity updateCurrentWeight(Long clientId, WeightRequest request) {
-        ClientEntity client = clientService.getClientById(clientId);
+    public WeightEntity updateCurrentWeight(UserEntity user, Long clientId, WeightRequest request) {
+        ClientEntity client = clientService.getClientById(user,clientId);
 
         double oldWeight = client.getCurrentWeight();
         double newWeight = request.getNewWeight();

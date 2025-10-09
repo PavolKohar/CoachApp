@@ -45,7 +45,7 @@ public class TrainingServiceImpl implements TrainingService {
         entity.setDone(false); // Default false when creating new training
 
         if (request.getClientId() != null){
-            entity.setClient(clientService.getClientById(request.getClientId()));
+            entity.setClient(clientService.getClientById(user,request.getClientId()));
         }
 
         if (request.getSettingsId() != null){

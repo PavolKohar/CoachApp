@@ -124,8 +124,8 @@ public class TrainingController {
     }
 
     @GetMapping("{clientId}/all")
-    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsForClient(@PathVariable Long clientId){
-        ClientEntity client = clientService.getClientById(clientId);
+    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsForClient(@AuthenticationPrincipal UserEntity user,@PathVariable Long clientId){
+        ClientEntity client = clientService.getClientById(user,clientId);
         List<TrainingEntity> entities = trainingService.getAllTrainingsByClient(client);
         List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
 
@@ -133,8 +133,8 @@ public class TrainingController {
     }
 
     @GetMapping("{clientId}/undone")
-    public ResponseEntity<List<TrainingResponseFull>> getUndoneTrainingsForClient(@PathVariable Long clientId){
-        ClientEntity client = clientService.getClientById(clientId);
+    public ResponseEntity<List<TrainingResponseFull>> getUndoneTrainingsForClient(@AuthenticationPrincipal UserEntity user,@PathVariable Long clientId){
+        ClientEntity client = clientService.getClientById(user,clientId);
         List<TrainingEntity> entities = trainingService.getUndoneTrainingsByClient(client);
         List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
 
@@ -151,8 +151,8 @@ public class TrainingController {
     }
 
     @GetMapping("/plans-client/{clientId}")
-    public ResponseEntity<List<TrainingPlanResponse>> getAllTrainingPlansForClient(@PathVariable Long clientId){
-        ClientEntity client = clientService.getClientById(clientId);
+    public ResponseEntity<List<TrainingPlanResponse>> getAllTrainingPlansForClient(@AuthenticationPrincipal UserEntity user,@PathVariable Long clientId){
+        ClientEntity client = clientService.getClientById(user,clientId);
         List<TrainingPlanEntity> planEntities = trainingPlanService.getAllTrainingPlansForClient(client);
         List<TrainingPlanResponse> responses = planEntities.stream().map(TrainingPlanMapper::toResponse).toList();
 

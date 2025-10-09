@@ -15,15 +15,15 @@ public interface ClientService {
 
     List<ClientEntity> getAllClientsByOwner(UserEntity user);
 
-    ClientEntity getClientById(Long clientId);
+    ClientEntity getClientById(UserEntity user,Long clientId);
 
-    ClientEntity toggleActive(Long clientId);
+    ClientEntity toggleActive(UserEntity user,Long clientId);
 
-    ClientEntity updateContactClient(Long clientId, ClientContactRequest request);
+    ClientEntity updateContactClient(UserEntity user,Long clientId, ClientContactRequest request);
 
-    ClientEntity updateAddressClient(Long clientId, ClientAddressRequest request);
+    ClientEntity updateAddressClient(UserEntity user,Long clientId, ClientAddressRequest request);
 
-    ClientEntity updateFitnessClient(Long clientId, ClientFitnessRequest request);
+    ClientEntity updateFitnessClient(UserEntity user,Long clientId, ClientFitnessRequest request);
 
-    void deleteClientById(Long clientId);
+    void deleteClientById(UserEntity user,Long clientId);
 }

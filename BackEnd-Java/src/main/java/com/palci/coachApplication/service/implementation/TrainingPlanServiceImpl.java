@@ -97,7 +97,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
 
             TrainingEntity training = new TrainingEntity();
 
-            training.setClient(clientService.getClientById(request.getClientId()));
+            training.setClient(clientService.getClientById(user,request.getClientId()));
             training.setUser(user);
             training.setTitle(chooseWorkout(trainingSplit));
             training.setDate(trainingDay);
@@ -117,7 +117,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
 
             planEntity.setTitle(request.getTitle());
             planEntity.setTrainings(trainings);
-            planEntity.setClient(clientService.getClientById(request.getClientId()));
+            planEntity.setClient(clientService.getClientById(user,request.getClientId()));
             planEntity.setUser(user);
             planEntity.setStartDate(request.getStartDate());
             planEntity.setEndDate(endDate);

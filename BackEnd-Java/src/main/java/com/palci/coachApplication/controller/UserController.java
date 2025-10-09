@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,8 +61,8 @@ public class UserController {
 
 
     @PostMapping("/add-note/{userId}")
-    public ResponseEntity<NoteResponse> createNote(@PathVariable Long userId, @RequestBody NoteRequest request){
-        NoteEntity entity = notesService.createNote(userId,request);
+    public ResponseEntity<NoteResponse> createNote(@AuthenticationPrincipal UserEntity user, @PathVariable Long userId, @RequestBody NoteRequest request){
+        NoteEntity entity = notesService.createNote(user,request);
         NoteResponse response = NoteMapper.toResponse(entity);
 
         return ResponseEntity.ok(response);

@@ -24,16 +24,16 @@ public class NotesServiceImpl implements NotesService {
 
 
     @Override
-    public NoteEntity createNote(Long userId, NoteRequest request) {
+    public NoteEntity createNote(UserEntity user, NoteRequest request) {
         NoteEntity entity = new NoteEntity();
         entity.setNote(request.getNote());
         entity.setDate(LocalDate.now());
 
-        UserEntity user = userService.getById(userId);
+
         entity.setOwner(user);
 
         if (request.getClientId() != null){
-            ClientEntity client = clientService.getClientById(request.getClientId());
+            ClientEntity client = clientService.getClientById(user,request.getClientId());
             entity.setClient(client);
         }
 
@@ -49,8 +49,10 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public List<NoteEntity> getClientsNotes(Long clientId) {
-        ClientEntity client = clientService.getClientById(clientId);
+    public List<NoteEntity> getClientsNotes(UserEntity user,Long clientId) {
+
+
+        ClientEntity client = clientService.getClientById(user,clientId);
 
         return notesRepository.findAllByClient(client);
     }

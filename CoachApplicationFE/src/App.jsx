@@ -22,6 +22,7 @@ import TrainingPage from './components/trainings/TrainingPage'
 import TrainingPlanPage from './components/trainings/TrainingPlanPage'
 import ClientTrainingsPage from './components/trainings/ClientTrainingsPage'
 import UserTrainingsPage from './components/trainings/UserTrainingsPage'
+import ForbiddenPage from './pages/error/ForbiddenPage'
 
 
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/plan/:userId/:planId" element={<TrainingPlanPage/>} />
         <Route path="/trainings/all/:userId/:clientId" element={<ClientTrainingsPage/>} />
         <Route path="/trainings/:userId/all" element={<UserTrainingsPage/>}/>
+        <Route path="/forbidden" element={<ForbiddenPage />} />
         
         
 

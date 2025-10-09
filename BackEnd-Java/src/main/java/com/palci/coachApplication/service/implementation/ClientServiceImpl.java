@@ -12,6 +12,7 @@ import com.palci.coachApplication.repository.ClientRepository;
 import com.palci.coachApplication.service.ClientService;
 import com.palci.coachApplication.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,21 +43,37 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientEntity getClientById(Long clientId) {
-        return getClientOrThrow(clientId);
+    public ClientEntity getClientById(UserEntity user,Long clientId) {
+        ClientEntity client = getClientOrThrow(clientId);
+
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("You don't have access to this client");
+        }
+
+        return client;
     }
 
     @Override
-    public ClientEntity toggleActive(Long clientId) {
+    public ClientEntity toggleActive(UserEntity user,Long clientId) {
         ClientEntity client = getClientOrThrow(clientId);
+
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("You don't have access to this client");
+        }
+
         client.setActive(!client.getActive());
 
         return clientRepository.save(client);
     }
 
     @Override
-    public ClientEntity updateContactClient(Long clientId, ClientContactRequest request) {
+    public ClientEntity updateContactClient(UserEntity user,Long clientId, ClientContactRequest request) {
         ClientEntity client = getClientOrThrow(clientId);
+
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("You don't have access to this client");
+        }
+
         client.setFirstName(request.getFirstName());
         client.setLastName(request.getLastName());
         client.setEmail(request.getEmail());
@@ -66,9 +83,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientEntity updateAddressClient(Long clientId, ClientAddressRequest request) {
+    public ClientEntity updateAddressClient(UserEntity user,Long clientId, ClientAddressRequest request) {
         ClientEntity client = getClientOrThrow(clientId);
 
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("You don't have access to this client");
+        }
         client.setCountry(request.getCountry());
         client.setCity(request.getCity());
         client.setZipCode(request.getZipCode());
@@ -78,9 +98,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientEntity updateFitnessClient(Long clientId, ClientFitnessRequest request) {
+    public ClientEntity updateFitnessClient(UserEntity user,Long clientId, ClientFitnessRequest request) {
         ClientEntity client = getClientOrThrow(clientId);
 
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("You don't have access to this client");
+        }
         client.setActivityLevel(request.getActivityLevel());
         client.setGoalWeight(request.getGoalWeight());
         client.setProgram(request.getProgram());
@@ -89,8 +112,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void deleteClientById(Long clientId) {
-        clientRepository.deleteById(clientId);
+    public void deleteClientById(UserEntity user,Long clientId) {
+        ClientEntity client = getClientOrThrow(clientId);
+
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("You don't have access to this client");
+        }
+
+        clientRepository.delete(client);
     }
 
 
