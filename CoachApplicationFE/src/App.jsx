@@ -20,6 +20,8 @@ import AddTrainingForm from './components/trainings/AddTrainingForm'
 import TrainingPlanForm from './components/trainings/TrainingPlanForm'
 import TrainingPage from './components/trainings/TrainingPage'
 import TrainingPlanPage from './components/trainings/TrainingPlanPage'
+import ClientTrainingsPage from './components/trainings/ClientTrainingsPage'
+import UserTrainingsPage from './components/trainings/UserTrainingsPage'
 
 
 
@@ -52,6 +54,8 @@ function App() {
         <Route path="/trainings/:userId/plans/new" element={<TrainingPlanForm/>} />
         <Route path="/training/:userId/:trainingId" element={<TrainingPage/>} />
         <Route path="/plan/:userId/:planId" element={<TrainingPlanPage/>} />
+        <Route path="/trainings/all/:userId/:clientId" element={<ClientTrainingsPage/>} />
+        <Route path="/trainings/:userId/all" element={<UserTrainingsPage/>}/>
         
         
 

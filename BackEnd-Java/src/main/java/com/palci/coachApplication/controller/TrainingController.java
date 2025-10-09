@@ -55,6 +55,14 @@ public class TrainingController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{userId}/user/all")
+    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsForUser(@PathVariable Long userId){
+        UserEntity user = userService.getById(userId);
+        List<TrainingResponseFull> responseFulls = trainingService.getAllTrainingsForUser(user);
+
+        return ResponseEntity.ok(responseFulls);
+    }
+
     @GetMapping("/{userId}/today")
     public ResponseEntity<List<TrainingResponseFull>> getTodayTrainingsForUser(@PathVariable Long userId){
         UserEntity user = userService.getById(userId);
@@ -106,6 +114,13 @@ public class TrainingController {
     public ResponseEntity<Void> deleteTraining(@PathVariable Long trainingId){
         trainingService.deleteTrainingById(trainingId);
 
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete/plan/{planId}")
+    public ResponseEntity<Void> deleteTrainingPlanById(@PathVariable Long planId){
+
+        trainingPlanService.deleteTrainingPlanById(planId);
         return ResponseEntity.noContent().build();
     }
 

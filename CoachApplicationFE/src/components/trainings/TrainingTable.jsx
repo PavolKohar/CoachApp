@@ -21,41 +21,53 @@ function TrainingTable({ trainings, userId }) {
           </tr>
         </thead>
         <tbody>
-          {trainings.length === 0 ? (
-            <tr>
-              <td colSpan="9" className="text-center text-muted">No trainings found.</td>
-            </tr>
+{
+  trainings
+    .slice()
+    .sort((a, b) => {
+      // 1. Najprv podľa `done` (false < true = nedokončené hore)
+      if (a.done !== b.done) return a.done - b.done;
+
+      // 2. Potom podľa dátumu
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA - dateB;
+    })
+    .map((t) => (
+      <tr
+        key={t.id}
+        onClick={() => navigate(`/training/${userId}/${t.id}`)}
+        style={{ cursor: "pointer" }}
+      >
+        <td>{t.date}</td>
+        <td>{t.time?.slice(0, 5)} – {t.endTime?.slice(0, 5)}</td>
+        <td>{t.clientFullName || "—"}</td>
+        <td>{t.title}</td>
+        <td>{t.durationInMinutes} min</td>
+        <td>{t.price} €</td>
+        <td>{t.settingsName || "—"}</td>
+        <td>
+          {t.done ? (
+            <span className="badge bg-success">✔️</span>
           ) : (
-            trainings.map((t) => (
-              <tr key={t.id} onClick={() => navigate(`/training/${userId}/${t.id}`)} style={{ cursor: "pointer" }}>
-                <td>{t.date}</td>
-                <td>{t.time?.slice(0,5)} – {t.endTime?.slice(0,5)}</td>
-                <td>{t.clientFullName || "—"}</td>
-                <td>{t.title}</td>
-                <td>{t.durationInMinutes} min</td>
-                <td>{t.price} €</td>
-                <td>{t.settingsName || "—"}</td>
-                <td>
-                  {t.done ? (
-                    <span className="badge bg-success">✔️</span>
-                  ) : (
-                    <span className="badge bg-warning text-dark">⏳</span>
-                  )}
-                </td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-outline-primary"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/training/${t.id}/edit`);
-                    }}
-                  >
-                    ✏️
-                  </button>
-                </td>
-              </tr>
-            ))
+            <span className="badge bg-warning text-dark">⏳</span>
           )}
+        </td>
+        <td>
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/training/${userId}/${t.id}`);
+            }}
+          >
+            ✏️
+          </button>
+        </td>
+      </tr>
+    ))
+}
+          
         </tbody>
       </table>
     </div>

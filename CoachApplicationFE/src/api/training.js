@@ -53,6 +53,21 @@ export const getTodayTrainingsforUser = async (userId) => {
     
 }
 
+export const getAllTrainingsForUser = async (userId) => {
+    try{
+        const response = await axios.get(`${BASE_URL}/${userId}/user/all`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        return response.data;
+    }catch(error){
+        console.error("Error getting trainings", error)
+        throw error;
+    }
+    
+}
+
 export const getTrainingById = async (trainingId) =>{
     try {
         const response = await axios.get(`${BASE_URL}/${trainingId}`,{
@@ -230,4 +245,18 @@ export const getTrainingPlanbyId = async (planId) => {
         console.error("Error getting plan" ,error)
         throw error; 
     } 
+}
+
+export const deleteTrainingPlanById = async (planId) => {
+    try {
+        await axios.delete(`${BASE_URL}/delete/plan/${planId}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+    } catch (error) {
+        console.error("Error deleting training plan " , error)
+        throw error;
+    }
+    
 }

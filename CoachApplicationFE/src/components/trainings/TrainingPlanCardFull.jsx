@@ -23,13 +23,9 @@ function TrainingPlanCardFull({ plan }) {
     <div
       className="card bg-white text-dark shadow mb-4 border-0"
       style={{
-        cursor: "pointer",
         borderRadius: "15px",
-        transition: "transform 0.2s",
       }}
-      onClick={() => navigate(`/plan/${id}`)}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1.00)")}
+     
     >
       <div className="card-body p-4">
         {/* Header */}

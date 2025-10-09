@@ -147,4 +147,9 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
     public TrainingPlanEntity getTrainingPlatById(Long planId) {
         return trainingPlanRepository.findById(planId).orElseThrow(()->new ResourceNotFoundException("Fail to find plan"));
     }
+
+    @Override
+    public void deleteTrainingPlanById(Long planId) {
+        trainingPlanRepository.deleteById(planId);
+    }
 }

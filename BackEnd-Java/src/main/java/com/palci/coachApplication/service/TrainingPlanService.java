@@ -18,5 +18,5 @@ public interface TrainingPlanService {
 
     TrainingPlanEntity getTrainingPlatById(Long planId);
 
-    //TODO - add void method to delete training plan with all trainings
+    void deleteTrainingPlanById(Long planId);
 }

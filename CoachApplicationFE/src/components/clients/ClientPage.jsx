@@ -270,7 +270,11 @@ function ClientPage(){
     </div>
   </div>
   <hr />
-  <h5>Upcoming trainings</h5>
+  <div className="d-flex justify-content-between mb-1">
+      <h5>Upcoming trainings</h5>
+      <Link className="btn btn-success" to={`/trainings/all/${client.userId}/${clientId}`} >All trainings</Link>
+  </div>
+  
   <TrainingListSmall trainings={trainings} onDoneClick={handleDoneButton} onTrainingClick={handleClickTraining}/>
   <hr />
   <div className="d-flex justify-content-between">
