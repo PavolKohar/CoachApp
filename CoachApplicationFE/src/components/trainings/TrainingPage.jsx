@@ -36,6 +36,14 @@ function TrainingPage() {
           settingsId: data.settingsId || ""
         });
       } catch (error) {
+           if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+
+          if(error.response?.status === 404){
+            navigate("/not-found")
+          } 
+
         console.error("Error fetching training", error);
       }
     };

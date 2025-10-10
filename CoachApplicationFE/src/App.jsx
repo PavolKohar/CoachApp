@@ -23,6 +23,7 @@ import TrainingPlanPage from './components/trainings/TrainingPlanPage'
 import ClientTrainingsPage from './components/trainings/ClientTrainingsPage'
 import UserTrainingsPage from './components/trainings/UserTrainingsPage'
 import ForbiddenPage from './pages/error/ForbiddenPage'
+import NotFoundPage from './pages/error/NotFoundPage'
 
 
 
@@ -58,6 +59,7 @@ function App() {
         <Route path="/trainings/all/:userId/:clientId" element={<ClientTrainingsPage/>} />
         <Route path="/trainings/:userId/all" element={<UserTrainingsPage/>}/>
         <Route path="/forbidden" element={<ForbiddenPage />} />
+        <Route path="/not-found" element={<NotFoundPage />} />
         
         
 

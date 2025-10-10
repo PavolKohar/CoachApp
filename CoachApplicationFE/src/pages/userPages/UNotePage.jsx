@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getUserNotes } from "../../api/users";
 import { getUserById } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 
 import NotePreview from "../../components/NotePreview";
 
@@ -13,6 +14,7 @@ function UNotePage() {
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
     const [selectedClient, setSelectedClient] = useState("all");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -24,6 +26,12 @@ function UNotePage() {
                 setUser(userData);
                 setNotes(data);
             } catch (error) {
+             if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+            if(error.response?.status === 404){
+              navigate("/not-found")
+          } 
                 console.error("Error fetching notes:", error);
             }
         };
@@ -47,6 +55,10 @@ function UNotePage() {
         setNotes(updatedNotes)
     }
 
+    const handleBackButton = () =>{
+        navigate(-1);
+    }
+
     if (!notes) {
         return <div className="spinner-grow spinner-grow-sm" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -55,7 +67,12 @@ function UNotePage() {
 
     return (
                 <>
+                <div className="container mt-3">
+                    <button className="btn btn-success" onClick={handleBackButton} > ↩️</button>
+                </div>
+                
             <div className="container mt-5 row gap-4 mx-auto">
+                
                 <h2 className="text-center mb-4">🗒️ Your Notes</h2>
 
       {/* Select Filter */}

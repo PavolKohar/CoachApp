@@ -6,6 +6,7 @@ import { getClientNotes } from "../../api/clients";
 import NotePreview from "../NotePreview";
 import { getClientByIdSmall } from "../../api/clients";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 function NotePage() {
@@ -13,6 +14,7 @@ function NotePage() {
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
     const [client, setClient] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -25,6 +27,14 @@ function NotePage() {
                     console.log("Client notes data:", data);
                 
             } catch (error) {
+              
+            if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+
+          if(error.response?.status === 404){
+            navigate("/not-found")
+          } 
                 console.error("Error fetching notes:", error);
             }
         };
@@ -36,6 +46,10 @@ function NotePage() {
         const updatedNotes = notes.filter(n=> n.id !== idToDelete);
         console.log(updatedNotes)
         setNotes(updatedNotes)
+    }
+
+    const handleBackButton =() =>{
+        navigate(-1);
     }
 
   if (!client || !notes) {
@@ -51,6 +65,10 @@ function NotePage() {
 
     return (
         <>
+                <div className="container mt-3">
+                    <button className="btn btn-success" onClick={handleBackButton} > ↩️</button>
+                </div>
+
             <div className="container mt-5 row gap-4 mx-auto">
             <h2 className="text-center">
                  Notes for {client ? client.firstName + " " + client.lastName + " " + userId : "Client"}

@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +40,14 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId){
+    public ResponseEntity<UserResponse> getUserById(@AuthenticationPrincipal UserEntity userAuth,@PathVariable Long userId){
         UserEntity user = userService.getById(userId);
+
+        if (!user.getUserId().equals(userAuth.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
+
         UserResponse response = UserMapper.toResponse(user);
         List<ClientEntity> clients = clientService.getAllClientsByOwner(user);
         List<ClientResponseSmall> clientResponses = clients.stream().map(ClientMapper::toSmallResponse).toList();

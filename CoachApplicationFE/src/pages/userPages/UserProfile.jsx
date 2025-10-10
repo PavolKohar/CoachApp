@@ -30,6 +30,13 @@ function UserProfile() {
         const data = await getUserPrograms(userId);
         setPrograms(data);
       }catch (error){
+                 if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+
+          if(error.response?.status === 404){
+            navigate("/not-found")
+          } 
         console.error("Failed to fetch programs", error)
       }
     };
@@ -45,6 +52,13 @@ function UserProfile() {
         
         
       } catch (err) {
+          if(err.response?.status === 403){
+             navigate("/forbidden")
+          }
+
+          if(err.response?.status === 404){
+            navigate("/not-found")
+          } 
         console.error("Error loading trainings", err);
       }
     };
@@ -76,6 +90,13 @@ function UserProfile() {
         setUser(data);
         console.log("Fetched user data:", data);
       } catch (error) {
+         if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+
+          if(error.response?.status === 404){
+            navigate("/not-found")
+          }      
         console.error("Error fetching user data:", error);
       }
     };

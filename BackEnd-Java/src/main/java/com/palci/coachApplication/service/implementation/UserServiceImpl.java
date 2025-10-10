@@ -1,6 +1,7 @@
 package com.palci.coachApplication.service.implementation;
 
 import com.palci.coachApplication.exception.DuplicateEmailException;
+import com.palci.coachApplication.exception.DuplicateUserNameException;
 import com.palci.coachApplication.exception.PasswordsDoNotEqualException;
 import com.palci.coachApplication.model.entity.UserEntity;
 import com.palci.coachApplication.model.request.UserRequest;
@@ -30,6 +31,14 @@ public class UserServiceImpl implements UserService {
         // Checking if passwords equals
         if (!request.getPassword().equals(request.getConfirmPassword())){
             throw new PasswordsDoNotEqualException();
+        }
+
+        if (userRepository.existsByEmail(request.getEmail())){
+            throw new DuplicateEmailException();
+        }
+
+        if (userRepository.existsByUserName(request.getUsername())){
+            throw new DuplicateUserNameException("This username is already in use ");
         }
 
 

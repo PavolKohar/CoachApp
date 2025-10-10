@@ -27,13 +27,13 @@ public interface TrainingService {
 
     TrainingEntity getById(UserEntity user, Long trainingId);
 
-    void updateTraining(Long trainingId, TrainingUpdateRequest request);
+    void updateTraining(UserEntity user,Long trainingId, TrainingUpdateRequest request);
 
-    void deleteTrainingById(Long trainingId);
+    void deleteTrainingById(UserEntity user,Long trainingId);
 
-    List<TrainingEntity> getAllTrainingsByClient(ClientEntity client);
+    List<TrainingEntity> getAllTrainingsByClient(UserEntity user,ClientEntity client);
 
-    List<TrainingEntity> getUndoneTrainingsByClient(ClientEntity client);
+    List<TrainingEntity> getUndoneTrainingsByClient(UserEntity user,ClientEntity client);
 
-    List<TrainingEntity> getAllTrainingsByTrainingPlan(TrainingPlanEntity plan);
+    List<TrainingEntity> getAllTrainingsByTrainingPlan(UserEntity user,TrainingPlanEntity plan);
 }

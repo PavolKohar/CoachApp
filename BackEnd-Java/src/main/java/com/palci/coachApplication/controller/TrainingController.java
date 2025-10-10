@@ -102,16 +102,16 @@ public class TrainingController {
     }
 
     @PatchMapping("/update/{trainingId}")
-    public ResponseEntity<?> updateTraining(@PathVariable Long trainingId, @RequestBody TrainingUpdateRequest request){
+    public ResponseEntity<?> updateTraining(@AuthenticationPrincipal UserEntity user ,@PathVariable Long trainingId, @RequestBody TrainingUpdateRequest request){
 
-        trainingService.updateTraining(trainingId,request);
+        trainingService.updateTraining(user,trainingId,request);
 
         return ResponseEntity.ok("Training updated");
     }
 
     @DeleteMapping("/delete/{trainingId}")
-    public ResponseEntity<Void> deleteTraining(@PathVariable Long trainingId){
-        trainingService.deleteTrainingById(trainingId);
+    public ResponseEntity<Void> deleteTraining(@AuthenticationPrincipal UserEntity user,@PathVariable Long trainingId){
+        trainingService.deleteTrainingById(user,trainingId);
 
         return ResponseEntity.noContent().build();
     }
@@ -126,7 +126,7 @@ public class TrainingController {
     @GetMapping("{clientId}/all")
     public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsForClient(@AuthenticationPrincipal UserEntity user,@PathVariable Long clientId){
         ClientEntity client = clientService.getClientById(user,clientId);
-        List<TrainingEntity> entities = trainingService.getAllTrainingsByClient(client);
+        List<TrainingEntity> entities = trainingService.getAllTrainingsByClient(user,client);
         List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
 
         return ResponseEntity.ok(responseFulls);
@@ -135,7 +135,7 @@ public class TrainingController {
     @GetMapping("{clientId}/undone")
     public ResponseEntity<List<TrainingResponseFull>> getUndoneTrainingsForClient(@AuthenticationPrincipal UserEntity user,@PathVariable Long clientId){
         ClientEntity client = clientService.getClientById(user,clientId);
-        List<TrainingEntity> entities = trainingService.getUndoneTrainingsByClient(client);
+        List<TrainingEntity> entities = trainingService.getUndoneTrainingsByClient(user,client);
         List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
 
         return ResponseEntity.ok(responseFulls);
@@ -169,9 +169,9 @@ public class TrainingController {
     }
 
     @GetMapping("/trainings-plan/{planId}")
-    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsByTrainingPlan(@PathVariable Long planId){
+    public ResponseEntity<List<TrainingResponseFull>> getAllTrainingsByTrainingPlan(@AuthenticationPrincipal UserEntity user,@PathVariable Long planId){
         TrainingPlanEntity plan = trainingPlanService.getTrainingPlatById(planId);
-        List<TrainingEntity> entities = trainingService.getAllTrainingsByTrainingPlan(plan);
+        List<TrainingEntity> entities = trainingService.getAllTrainingsByTrainingPlan(user,plan);
         List<TrainingResponseFull> responseFulls = entities.stream().map(TrainingMapper::toFullResponse).toList();
 
         return ResponseEntity.ok(responseFulls);

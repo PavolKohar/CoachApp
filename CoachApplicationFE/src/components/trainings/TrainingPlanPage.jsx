@@ -23,6 +23,13 @@ useEffect(()=>{
         setPlan(planData)
         setTrainings(trainingsData);
         }catch(error){
+             if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+
+          if(error.response?.status === 404){
+            navigate("/not-found")
+          } 
             console.error("Error fetching data ", error);
         }    
     }

@@ -51,7 +51,7 @@ public class AuthController {
 
         return ResponseEntity
                 .ok()
-                .header("Content-Type", "application/json") // <- Dôležité
+                .header("Content-Type", "application/json")
                 .body(response);
     }
 

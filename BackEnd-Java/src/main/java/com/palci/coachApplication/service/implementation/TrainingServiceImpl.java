@@ -15,6 +15,7 @@ import com.palci.coachApplication.service.ClientService;
 import com.palci.coachApplication.service.TrainingService;
 import com.palci.coachApplication.service.TrainingSettingsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -106,6 +107,11 @@ public class TrainingServiceImpl implements TrainingService {
     public void toggleDone(Long trainingId, UserEntity user) {
         TrainingEntity training = trainingRepository.findById(trainingId).orElseThrow(()-> new ResourceNotFoundException("Training not found"));
 
+        if(!training.getUser().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
+
         training.setDone(!training.isDone());
         if (training.getPlan() != null){
             TrainingPlanEntity planEntity = training.getPlan();
@@ -118,14 +124,24 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public TrainingEntity getById(UserEntity user, Long trainingId) {
-        // TODO - Add exception if training does not belong to user
 
-        return trainingRepository.findById(trainingId).orElseThrow(()->new ResourceNotFoundException("Training not found"));
+        TrainingEntity training = trainingRepository.findById(trainingId).orElseThrow(()->new ResourceNotFoundException("Training not found"));
+
+        if(!training.getUser().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
+        return training;
     }
 
     @Override
-    public void updateTraining(Long trainingId, TrainingUpdateRequest request) {
+    public void updateTraining(UserEntity user,Long trainingId, TrainingUpdateRequest request) {
         TrainingEntity entity = trainingRepository.findById(trainingId).orElseThrow(()-> new ResourceNotFoundException("Training not found"));
+
+        if(!entity.getUser().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
 
         entity.setTitle(request.getTitle());
         entity.setDescription(request.getDescription());
@@ -149,22 +165,44 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void deleteTrainingById(Long trainingId) {
-        trainingRepository.deleteById(trainingId);
+    public void deleteTrainingById(UserEntity user,Long trainingId) {
+        TrainingEntity training = trainingRepository.findById(trainingId)
+                        .orElseThrow(()-> new  ResourceNotFoundException("Resource not found"));
+
+        if (!training.getUser().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
+        trainingRepository.delete(training);
     }
 
     @Override
-    public List<TrainingEntity> getAllTrainingsByClient(ClientEntity client) {
+    public List<TrainingEntity> getAllTrainingsByClient(UserEntity user,ClientEntity client) {
+
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
         return trainingRepository.findAllByClientOrderByDateDesc(client);
     }
 
     @Override
-    public List<TrainingEntity> getUndoneTrainingsByClient(ClientEntity client) {
+    public List<TrainingEntity> getUndoneTrainingsByClient(UserEntity user,ClientEntity client) {
+
+        if (!client.getOwner().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
         return trainingRepository.findAllByClientOrderByDateDesc(client).stream().filter(e->!e.isDone()).toList();
     }
 
     @Override
-    public List<TrainingEntity> getAllTrainingsByTrainingPlan(TrainingPlanEntity plan) {
+    public List<TrainingEntity> getAllTrainingsByTrainingPlan(UserEntity user,TrainingPlanEntity plan) {
+
+        if(!plan.getUser().getUserId().equals(user.getUserId())){
+            throw new AccessDeniedException("Not allowed");
+        }
+
         return trainingRepository.findAllByPlan(plan);
     }
 

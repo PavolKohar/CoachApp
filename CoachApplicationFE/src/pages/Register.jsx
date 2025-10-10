@@ -46,15 +46,29 @@ function Register() {
             });
             navigate("/login")
         } catch (error) {
-            if (error.response && error.response.status === 400) {
-              const backkendErrors = error.response.data.errors || {};
-                setErrors(backkendErrors);
+            if (error.response) {
+              // 1️⃣ Ak má backend validáciu z BindingResult
+              if (error.response.data.errors) {
+                setErrors(error.response.data.errors);
+                setErrorMessage('');
+              } 
+              // 2️⃣ Ak ide o vlastnú výnimku (z GlobalExceptionHandler)
+              else if (error.response.data.error) {
+                setErrors({});
+                setErrorMessage(error.response.data.error); // napr. "Passwords do not match"
+              } 
+              // fallback
+              else {
+                setErrors({});
+                setErrorMessage("Unexpected error occurred.");
+              }
             } else {
-                console.error("Error registering user:", error);
+              console.error("Error registering user:", error);
+              setErrorMessage("Network error. Please try again.");
             }
-            setErrorMessage("Failed to register. Please try again.");
+
             setSuccessMessage('');
-        }
+}
     }
 
 
@@ -120,18 +134,7 @@ function Register() {
         </div>
       </form>
     </div>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
     </>)
 
 

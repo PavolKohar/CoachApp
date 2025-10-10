@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getUserById } from "../../api/auth";
 import { getAllTrainingSettingsForUser } from "../../api/users";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,7 +14,8 @@ function UserEditPage (){
     const {userId} = useParams();
     const [user,setUser] = useState(null)
     const [settings,setSettings] = useState([])
-    const [successMessage, setSuccessMessage] = useState(""); // ⬅️ pridáme stav
+    const [successMessage, setSuccessMessage] = useState(""); 
+    const navigate = useNavigate();
 
 
    
@@ -26,6 +28,13 @@ function UserEditPage (){
                 setUser(userData)
                 setSettings(data)
             } catch (error) {
+
+            if(error.response?.status === 403){
+             navigate("/forbidden")
+          }
+            if(error.response?.status === 404){
+              navigate("/not-found")
+          } 
                 console.error("Error fetching data: " ,error)
             }
         };
